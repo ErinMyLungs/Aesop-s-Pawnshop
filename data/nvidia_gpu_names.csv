@@ -1,0 +1,833 @@
+,0
+0,"GeForce4 MX420
+"
+1,"GeForce4 MX440 SE
+"
+2,"GeForce4 MX4000
+"
+3,"GeForce4 PCX4300
+"
+4,"GeForce4 MX440
+"
+5,"GeForce4 MX440 8X
+"
+6,"GeForce4 MX460
+"
+7,"GeForce4 Ti4200
+"
+8,"GeForce4 Ti4200 8x
+"
+9,"GeForce4 Ti4400
+"
+10,"GeForce4 Ti4400 8x
+"
+11,"GeForce4 Ti4600
+"
+12,"GeForce4 Ti4600 8x
+"
+13,"GeForce 6100
+"
+14,"GeForce 6150 SE
+"
+15,"GeForce 6150
+"
+16,"GeForce 6150 LE
+"
+17,"GeForce 6200
+"
+18,"GeForce 6500
+"
+19,"GeForce 6600 LE
+"
+20,"GeForce 6600
+"
+21,"GeForce 6600 DDR2
+"
+22,"GeForce 6600 GT
+"
+23,"GeForce 6800 LE
+"
+24,"GeForce 6800 XT
+"
+25,"GeForce 6800
+"
+26,"GeForce 6800 GTO
+"
+27,"GeForce 6800 GS
+"
+28,"GeForce 6800 GT
+"
+29,"GeForce 6800 Ultra
+"
+30,"GeForce 7100 GS
+"
+31,"GeForce 7200 GS
+"
+32,"GeForce 7300 SE
+"
+33,"GeForce 7300 LE
+"
+34,"GeForce 7300 GS
+"
+35,"GeForce 7300 GT
+"
+36,"GeForce 7600 GS
+"
+37,"GeForce 7600 GT
+"
+38,"GeForce 7600 GT (80 nm)
+"
+39,"GeForce 7650 GS (80 nm)
+"
+40,"GeForce 7800 GS
+"
+41,"GeForce 7800 GT
+"
+42,"GeForce 7800 GTX
+"
+43,"GeForce 7800 GTX 512
+"
+44,"GeForce 7900 GS
+"
+45,"GeForce 7900 GT
+"
+46,"GeForce 7900 GTO
+"
+47,"GeForce 7900 GTX
+"
+48,"GeForce 7950 GT
+"
+49,"GeForce 7950 GX2
+"
+50,"GeForce 8100 mGPU[12]
+"
+51,"GeForce 8200 mGPU[12]
+"
+52,"GeForce 8300 mGPU[12]
+"
+53,"GeForce 8300 GS[13]
+"
+54,"GeForce 8400 GS
+"
+55,"GeForce 8400 GS rev.2
+"
+56,"GeForce 8400 GS rev.3
+"
+57,"GeForce 8500 GT
+"
+58,"GeForce 8600 GS
+"
+59,"GeForce 8600 GT
+"
+60,"GeForce 8600 GTS
+"
+61,"GeForce 8800 GS
+"
+62,"GeForce 8800 GTS (G80)
+"
+63,"GeForce 8800 GTS 112 (G80)
+"
+64,"GeForce 8800 GT
+"
+65,"GeForce 8800 GTS (G92)
+"
+66,"GeForce 8800 GTX
+"
+67,"GeForce 8800 Ultra
+"
+68,"GeForce 8300 GS (G86)
+"
+69,"GeForce 8400 GS Rev. 2 (G98)
+"
+70,"GeForce 8400 GS Rev. 3 (GT218)
+"
+71,"GeForce 8500 GT
+"
+72,"GeForce 8600 GT
+"
+73,"GeForce 8600 GTS
+"
+74,"GeForce 8800 GS (G92)
+"
+75,"GeForce 8800 GTS (G80)
+"
+76,"GeForce 8800 GTS Rev. 2 (G80)
+"
+77,"GeForce 8800 GT (G92)
+"
+78,"GeForce 8800 GTS (G92)
+"
+79,"GeForce 8800 GTX
+"
+80,"GeForce 8800 Ultra
+"
+81,"GeForce 9300 mGPU
+"
+82,"GeForce 9400 mGPU
+"
+83,"GeForce 9300 GE[15]
+"
+84,"GeForce 9300 GS[15]
+"
+85,"GeForce 9400 GT
+"
+86,"GeForce 9500 GT
+"
+87,"GeForce 9600 GS
+"
+88,"GeForce 9600 GSO
+"
+89,"GeForce 9600 GSO 512
+"
+90,"GeForce 9600 GT Green Edition
+"
+91,"GeForce 9600 GT
+"
+92,"GeForce 9800 GT Green Edition
+"
+93,"GeForce 9800 GT
+"
+94,"GeForce 9800 GTX
+"
+95,"GeForce 9800 GTX+
+"
+96,"GeForce 9800 GX2
+"
+97,"GeForce 9300 GE (G98)
+"
+98,"GeForce 9300 GS (G98)
+"
+99,"GeForce 9400 GT
+"
+100,"GeForce 9500 GT
+"
+101,"GeForce 9600 GSO
+"
+102,"GeForce 9600 GT
+"
+103,"GeForce 9800 GT
+"
+104,"GeForce 9800 GTX
+"
+105,"GeForce 9800 GTX+
+"
+106,"GeForce 9800 GX2
+"
+107,"GeForce G 100
+"
+108,"GeForce GT 120
+"
+109,"GeForce GT 130
+"
+110,"GeForce GT 140
+"
+111,"GeForce GTS 150
+"
+112,"GeForce 205
+"
+113,"GeForce 210
+"
+114,"GeForce GT 220
+"
+115,"GeForce GT 230
+"
+116,"GeForce GT 240
+"
+117,"GeForce GTS 240
+"
+118,"GeForce GTS 250
+"
+119,"GeForce GTX 260
+"
+120,"GeForce GTX 275
+"
+121,"GeForce GTX 280
+"
+122,"GeForce GTX 285
+"
+123,"GeForce GTX 295
+"
+124,"GeForce 210
+"
+125,"GeForce GT 220
+"
+126,"GeForce GT 240
+"
+127,"GeForce GTS 250
+"
+128,"GeForce GTX 260
+"
+129,"GeForce GTX 260 Core 216
+"
+130,"GeForce GTX 260 Core 216 (55 nm)
+"
+131,"GeForce GTX 275
+"
+132,"GeForce GTX 280
+"
+133,"GeForce GTX 285
+"
+134,"GeForce GTX 295
+"
+135,"GeForce 310
+"
+136,"GeForce 315
+"
+137,"GeForce GT 320
+"
+138,"GeForce GT 330 [19]
+"
+139,"GeForce GT 340
+"
+140,"GeForce 4057
+"
+141,"GeForce GT 420
+"
+142,"GeForce GT 430
+"
+143,"GeForce GT 440
+"
+144,"GeForce GTS 450
+"
+145,"GeForce GTX 460 SE
+"
+146,"GeForce GTX 460
+"
+147,"GeForce GTX 465
+"
+148,"GeForce GTX 470
+"
+149,"GeForce GTX 480
+"
+150,"GeForce 510
+"
+151,"GeForce GT 520
+"
+152,"GeForce GT 530
+"
+153,"GeForce GT 545
+"
+154,"GeForce GTX 550 Ti
+"
+155,"GeForce GTX 555
+"
+156,"GeForce GTX 560 SE
+"
+157,"GeForce GTX 560
+"
+158,"GeForce GTX 560 Ti
+"
+159,"GeForce GTX 560 Ti 448 Cores
+"
+160,"GeForce GTX 570
+"
+161,"GeForce GTX 580
+"
+162,"GeForce GTX 590
+"
+163,"GeForce 6052
+"
+164,"GeForce GT 6103
+"
+165,"GeForce GT 6204
+"
+166,"GeForce GT 625
+"
+167,"GeForce GT 630
+"
+168,"GeForce GT 635
+"
+169,"GeForce GT 6408
+"
+170,"GeForce GT 6459
+"
+171,"GeForce GTX 645
+"
+172,"GeForce GTX 650
+"
+173,"GeForce GTX 650 Ti
+"
+174,"GeForce GTX 650 Ti Boost
+"
+175,"GeForce GTX 660
+"
+176,"GeForce GTX 660 Ti
+"
+177,"GeForce GTX 670
+"
+178,"GeForce GTX 680
+"
+179,"GeForce GTX 690
+"
+180,"GeForce GT 705[36]4
+"
+181,"GeForce GT 710[37]
+"
+182,"GeForce GT 720[38]
+"
+183,"GeForce GT 730[39]5,6
+"
+184,"GeForce GT 7407
+"
+185,"GeForce GTX 745
+"
+186,"GeForce GTX 750
+"
+187,"GeForce GTX 750 Ti
+"
+188,"GeForce GTX 760 192-bit
+"
+189,"GeForce GTX 760
+"
+190,"GeForce GTX 760 Ti8
+"
+191,"GeForce GTX 770
+"
+192,"GeForce GTX 780
+"
+193,"GeForce GTX 780 Ti[44][45][46]
+"
+194,"GeForce GTX TITAN[47][48][49]
+"
+195,"GeForce GTX TITAN Black
+"
+196,"GeForce GTX TITAN Z
+"
+197,"GeForce GT 945A[51][52][53]
+"
+198,"GeForce GTX 950[54]
+"
+199,"GeForce GTX 950 (OEM)[55]
+"
+200,"GeForce GTX 960[56]
+"
+201,"GeForce GTX 960 (OEM)[57]
+"
+202,"GeForce GTX 970[58]
+"
+203,"GeForce GTX 980[60]
+"
+204,"GeForce GTX 980 Ti[61]
+"
+205,"GeForce GTX TITAN X[62]
+"
+206,"GeForce GT 1030 [67][68]
+"
+207,"GeForce GTX 1050[71]
+"
+208,"GeForce GTX 1050 Ti [71]
+"
+209,"GeForce GTX 1060[72][73][74][75]
+"
+210,"GeForce GTX 1070[76][77]
+"
+211,"GeForce GTX 1070 Ti[76]
+"
+212,"GeForce GTX 1080[81]
+"
+213,"GeForce GTX 1080 Ti[82]
+"
+214,"Nvidia TITAN X[83]
+"
+215,"Nvidia TITAN Xp[84]
+"
+216,"Nvidia TITAN V [85]
+"
+217,"Nvidia TITAN VCEO Edition[86][87]
+"
+218,"GeForce GTX 1650 [88]
+"
+219,"GeForce GTX 1660 [89]
+"
+220,"GeForce GTX 1660 Ti [90]
+"
+221,"GeForce RTX 2060 [91]
+"
+222,"GeForce RTX 2060 Super [92][93]
+"
+223,"GeForce RTX 2070 [94][95]
+"
+224,"GeForce RTX 2070 Super [92][96]
+"
+225,"GeForce RTX 2080 [97][98]
+"
+226,"GeForce RTX 2080 Super [92][99]
+"
+227,"GeForce RTX 2080 Ti [100]
+"
+228,"Nvidia TITAN RTX [101]
+"
+229,"GeForce FX Go 5100*
+"
+230,"GeForce FX Go 5500*
+"
+231,"GeForce FX Go 5600*
+"
+232,"GeForce FX Go 5650*
+"
+233,"GeForce FX Go 5700*
+"
+234,"GeForce 7000M
+"
+235,"GeForce 7150M
+"
+236,"GeForce Go 72002
+"
+237,"GeForce Go 73002
+"
+238,"GeForce Go 74002
+"
+239,"GeForce Go 7600
+"
+240,"GeForce Go 7600 GT
+"
+241,"GeForce Go 7700
+"
+242,"GeForce Go 7800
+"
+243,"GeForce Go 7800 GTX
+"
+244,"GeForce Go 7900 GS
+"
+245,"GeForce Go 7900 GTX
+"
+246,"GeForce Go 7950 GTX
+"
+247,"GeForce 8200M G [102]
+"
+248,"GeForce 8400M G
+"
+249,"GeForce 8400M GS
+"
+250,"GeForce 8400M GT
+"
+251,"GeForce 8600M GS
+"
+252,"GeForce 8600M GT
+"
+253,"GeForce 8700M GT
+"
+254,"GeForce 8800M GTS
+"
+255,"GeForce 8800M GTX
+"
+256,"GeForce 9100M G mGPU
+"
+257,"GeForce 9200M GS
+"
+258,"GeForce 9300M G
+"
+259,"GeForce 9300M GS
+"
+260,"GeForce 9400M G
+"
+261,"GeForce 9500M G
+"
+262,"GeForce 9500M GS
+"
+263,"GeForce 9600M GS
+"
+264,"GeForce 9600M GT
+"
+265,"GeForce 9650M GS
+"
+266,"GeForce 9650M GT
+"
+267,"GeForce 9700M GT
+"
+268,"GeForce 9700M GTS
+"
+269,"GeForce 9800M GS
+"
+270,"GeForce 9800M GTS
+"
+271,"GeForce 9800M GT
+"
+272,"GeForce 9800M GTX
+"
+273,"GeForce G 102M
+"
+274,"GeForce G 103M
+"
+275,"GeForce G 105M
+"
+276,"GeForce G 110M
+"
+277,"GeForce GT 120M
+"
+278,"GeForce GT 130M
+"
+279,"GeForce GTS 150M
+"
+280,"GeForce GTS 160M
+"
+281,"GeForce G210M
+"
+282,"GeForce GT 220M
+"
+283,"GeForce GT 230M
+"
+284,"GeForce GT 240M
+"
+285,"GeForce GTS 250M
+"
+286,"GeForce GTS 260M
+"
+287,"GeForce GTX 260M
+"
+288,"GeForce GTX 280M
+"
+289,"GeForce GTX 285M
+"
+290,"GeForce 305M
+"
+291,"GeForce 310M
+"
+292,"GeForce 315M
+"
+293,"GeForce 320M
+"
+294,"GeForce GT 320M
+"
+295,"GeForce GT 325M
+"
+296,"GeForce GT 330M
+"
+297,"GeForce GT 335M
+"
+298,"GeForce GTS 350M
+"
+299,"GeForce GTS 360M
+"
+300,"GeForce 410M
+"
+301,"GeForce GT 415M
+"
+302,"GeForce GT 420M
+"
+303,"GeForce GT 425M
+"
+304,"GeForce GT 435M
+"
+305,"GeForce GT 445M
+"
+306,"GeForce GTX 460M
+"
+307,"GeForce GTX 470M
+"
+308,"GeForce GTX 480M
+"
+309,"GeForce GTX 485M
+"
+310,"GeForce GT 520M
+"
+311,"GeForce GT 520M
+"
+312,"GeForce GT 520MX
+"
+313,"GeForce GT 525M
+"
+314,"GeForce GT 540M
+"
+315,"GeForce GT 550M
+"
+316,"GeForce GT 555M
+"
+317,"GeForce GTX 560M
+"
+318,"GeForce GTX 570M[106]
+"
+319,"GeForce GTX 580M
+"
+320,"GeForce 610M [107]
+"
+321,"GeForce GT 620M [108]
+"
+322,"GeForce GT 625M
+"
+323,"GeForce GT 630M[108][109][110]
+"
+324,"GeForce GT 635M[108][111][112]
+"
+325,"GeForce GT 640M LE[108]
+"
+326,"GeForce GT 640M[108][113]
+"
+327,"GeForce GT 645M
+"
+328,"GeForce GT 650M[108][114][115]
+"
+329,"GeForce GTX 660M[108][115][116][117]
+"
+330,"GeForce GTX 670M[108]
+"
+331,"GeForce GTX 670MX
+"
+332,"GeForce GTX 675M[108]
+"
+333,"GeForce GTX 675MX
+"
+334,"GeForce GTX 680M
+"
+335,"GeForce GTX 680MX
+"
+336,"GeForce 710M
+"
+337,"GeForce GT 720M
+"
+338,"GeForce GT 720M
+"
+339,"GeForce GT 730M
+"
+340,"GeForce GT 735M
+"
+341,"GeForce GT 740M
+"
+342,"GeForce GT 740M
+"
+343,"GeForce GT 745M
+"
+344,"GeForce GT 750M
+"
+345,"GeForce GT 755M [119]
+"
+346,"GeForce GTX 760M
+"
+347,"GeForce GTX 765M
+"
+348,"GeForce GTX 770M
+"
+349,"GeForce GTX 780M
+"
+350,"GeForce 810M
+"
+351,"GeForce 820M [120]
+"
+352,"GeForce 825M [122]
+"
+353,"GeForce 830M [123]
+"
+354,"GeForce 840M [124]
+"
+355,"GeForce 845M [125][126]
+"
+356,"GeForce GTX 850M [129]
+"
+357,"GeForce GTX 860M [130]
+"
+358,"GeForce GTX 870M [131]
+"
+359,"GeForce GTX 880M [132]
+"
+360,"GeForce 920M
+"
+361,"GeForce 930M
+"
+362,"GeForce 940M
+"
+363,"GeForce GTX 950M
+"
+364,"GeForce GTX 960M
+"
+365,"GeForce GTX 965M [137]
+"
+366,"GeForce GTX 970M [139]
+"
+367,"GeForce GTX 980M [140]
+"
+368,"GeForce GTX 980 [141]
+"
+369,"GeForce MX110[142][143]
+"
+370,"GeForce MX130[142][144][145]
+"
+371,"GeForce MX150[146]
+"
+372,"GeForce GTX 1050 (Notebook)[149][150]
+"
+373,"GeForce GTX 1050 Ti (Notebook)[149]
+"
+374,"GeForce GTX 1060 (Notebook)[149]
+"
+375,"GeForce GTX 1060 Max-Q
+"
+376,"GeForce GTX 1070 (Notebook)[149]
+"
+377,"GeForce GTX 1070 Max-Q
+"
+378,"GeForce GTX 1080 (Notebook)[149]
+"
+379,"GeForce GTX 1080 Max-Q
+"
+380,"C870 GPU Computing Module[d]
+"
+381,"D870 Deskside Computer[d]
+"
+382,"S870 GPU Computing Server[d]
+"
+383,"C1060 GPU Computing Module[e]
+"
+384,"S1070 GPU Computing Server ""400 configuration""[e]
+"
+385,"S1070 GPU Computing Server ""500 configuration""[e]
+"
+386,"S1075 GPU Computing Server[e][164]
+"
+387,"Quadro Plex 2200 D2 Visual Computing System[f]
+"
+388,"Quadro Plex 2200 S4 Visual Computing System[f]
+"
+389,"C2050 GPU Computing Module[165]
+"
+390,"M2050 GPU Computing Module[166]
+"
+391,"C2070 GPU Computing Module[165]
+"
+392,"C2075 GPU Computing Module[167]
+"
+393,"M2070/M2070Q GPU Computing Module[168]
+"
+394,"M2090 GPU Computing Module[169]
+"
+395,"S2050 GPU Computing Server
+"
+396,"S2070 GPU Computing Server
+"
+397,"K10 GPU accelerator[170]
+"
+398,"K20 GPU accelerator[171][172]
+"
+399,"K20X GPU accelerator[173]
+"
+400,"K40 GPU accelerator[174]
+"
+401,"K80 GPU accelerator[175]
+"
+402,"M4 GPU accelerator[176][177]
+"
+403,"M6 GPU accelerator[178]
+"
+404,"M10 GPU accelerator[179]
+"
+405,"M40 GPU accelerator[177][180]
+"
+406,"M60 GPU accelerator[181]
+"
+407,"P4 GPU accelerator[182]
+"
+408,"P6 GPU accelerator[183][184]
+"
+409,"P40 GPU accelerator[182]
+"
+410,"P100 GPU accelerator (mezzanine)[185][186]
+"
+411,"P100 GPU accelerator (16 GB card)[187]
+"
+412,"P100 GPU accelerator (12 GB card)[187]
+"
+413,"V100 GPU accelerator (mezzanine)[188][189][190]
+"
+414,"V100 GPU accelerator (PCIe card)[188][189][190]
+"
+415,"T4 GPU accelerator (PCIe card)[191][192]
+"
