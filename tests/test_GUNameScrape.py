@@ -39,7 +39,6 @@ def test_pd_series_to_set():
         "9300",
         "GPU",
         "GS[15]",
-        "GT",
         "GTX",
         "GeForce",
         "V100",
@@ -50,6 +49,18 @@ def test_pd_series_to_set():
     }
     assert gp.pd_series_to_set(test_df['name']) == result_set
     assert gp.pd_series_to_set(test_series) == result_set
+
+def test_remove_adjectives_from_names():
+    test_list = ['GeForce 9800 GT Green Edition',
+'GeForce GTX 560 Ti 448 Cores',
+'GeForce GTX 260 Core 216',
+'GeForce GTX TITAN Black']
+    result_list = ['GeForce 9800 GT',
+                   'GeForce GTX 560 Ti',
+                   'GeForce GTX 260',
+                   'GeForce GTX TITAN']
+
+    assert [gp.remove_adjectives_from_names(name) for name in test_list] == result_list
 
 def test_scrape_gpu_names_wikipedia():
     pass
