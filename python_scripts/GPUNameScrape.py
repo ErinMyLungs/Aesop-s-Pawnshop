@@ -39,6 +39,15 @@ def name_cleanup(name:str):
         return name[:idx].strip()
     return name.strip()
 
+def pd_series_to_set(series):
+    """
+    Takes a pandas series (a df column) and will return a set of all the values split into individual words
+    :param series: pandas series of strings
+    :return: set of each individual word
+    """
+    return {value for value in {item.split for item in series}}
+
+
 if __name__ == '__main__':
     nvidia_url = 'https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units'
     nvidia_raw_csv = '/home/erin/PycharmProjects/HardwareScrape/data/nvidia_gpu_names.csv'
