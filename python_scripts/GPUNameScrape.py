@@ -25,13 +25,20 @@ def scrape_gpu_names_wikipedia(url:str, csv_filepath:str, return_dataframe=False
         return gpu_names_dataframe
 
 
-def name_cleanup(name:str):
-    char_search_list = ['(', '[', '{']
+def name_cleanup(name:str, char_search_list=['(', '[', '{']):
+    """
+    Slices string to instance of character in search list. Assumes all info to the right of the left-most char found is garbage.
+    :param name: string to cleanup, used often with single values from pd series with applymap
+    :param char_search_list: list of single characters to search for
+    :return: string cleaned up and stripped
+    """
     idx = None
     for char in char_search_list:
         potential_index = name.find(char)
+
         if potential_index != -1 and idx:
             idx = min(idx, potential_index)
+
         elif potential_index != -1 and not idx:
             idx = potential_index
 
