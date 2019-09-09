@@ -40,13 +40,12 @@ def name_cleanup(name:str):
     return name.strip()
 
 def pd_series_to_set(series):
-    """
-    Takes a pandas series (a df column) and will return a set of all the values split into individual words
-    :param series: pandas series of strings
-    :return: set of each individual word
-    """
-    return {value for value in {item.split for item in series}}
-
+    result_set = set()
+    for value in series:
+        holder_set = {item for item in value.split()}
+        for string in holder_set:
+            result_set.add(string)
+    return result_set
 
 if __name__ == '__main__':
     nvidia_url = 'https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units'
@@ -56,7 +55,7 @@ if __name__ == '__main__':
     nv_df.rename({'0': 'name'}, axis=1, inplace=True)
     nv_df = nv_df.applymap(lambda x: name_cleanup(x))
     nv_df.to_csv(nvidia_cleaned_csv)
-    #
+    # TODO: Get this working for webscraping amd card names
     # amd_url = 'https://en.wikipedia.org/wiki/List_of_AMD_graphics_processing_units'
     # amd_csv = '/home/erin/PycharmProjects/HardwareScrape/data/amd_gpu_names.csv'
     # df = scrape_gpu_names_wikipedia(amd_url, amd_csv, True)
