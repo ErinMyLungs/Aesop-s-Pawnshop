@@ -1,7 +1,7 @@
 from python_scripts import secrets
 import praw
 import datetime
-from secrets import reddit_app_key, reddit_secret_key
+from .secrets import reddit_app_key, reddit_secret_key
 
 reddit = praw.Reddit(
     client_id=reddit_app_key,
