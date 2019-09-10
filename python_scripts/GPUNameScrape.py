@@ -53,28 +53,31 @@ def name_cleanup(name: str, char_search_list=["(", "[", "{", "*"]):
     return name.strip()
 
 
-def remove_adjectives_from_names(name:str):
+def remove_adjectives_from_names(name: str):
     """
     Replaces all weird adjectives with blank space so the set isn't cluttered with adjectives that are unhelpful
     :param name: name to remove adjectives from
     :return: cleaned name
     """
-    bad_list = ['Black',
-                'Boost',
-                'Core 216',
-                '448 Cores',
-                'DDR2',
-                'Edition',
-                'Green',
-                'rev.2',
-                'rev.3',
-                'Ultra',
-                'Rev. 2',
-                'Rev. 3',
-                '192-bit']
+    bad_list = [
+        "Black",
+        "Boost",
+        "Core 216",
+        "448 Cores",
+        "DDR2",
+        "Edition",
+        "Green",
+        "rev.2",
+        "rev.3",
+        "Ultra",
+        "Rev. 2",
+        "Rev. 3",
+        "192-bit",
+    ]
     for adj in bad_list:
-        name = name.replace(adj, '')
+        name = name.replace(adj, "")
     return name.strip()
+
 
 def pd_series_to_set(series):
     """
@@ -86,9 +89,10 @@ def pd_series_to_set(series):
     for value in series:
         holder_set = {item for item in value.split()}
         for string in holder_set:
-            if len(string) >2:
+            if len(string) > 2:
                 result_set.add(remove_adjectives_from_names(string))
     return result_set
+
 
 def prior_main_call():
     nvidia_url = (

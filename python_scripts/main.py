@@ -30,4 +30,3 @@ for submission in hardware_new:
         print(submission.link_flair_text)
         print(submission.selftext)
 print("Search complete")
-
