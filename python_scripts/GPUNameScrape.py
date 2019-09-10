@@ -90,7 +90,7 @@ def pd_series_to_set(series):
         holder_set = {item for item in value.split()}
         for string in holder_set:
             if len(string) > 2:
-                result_set.add(remove_adjectives_from_names(string))
+                result_set.add(remove_adjectives_from_names(string).lower())
     return result_set
 
 

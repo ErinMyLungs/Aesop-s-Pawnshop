@@ -15,13 +15,19 @@ nvidia_names = pd.read_csv(
 gpu_name_set = pd_series_to_set(nvidia_names["name"])
 
 
-def scrape_hws_new(limit=None):
+def scrape_hws_new(gpu_name_set:set, limit: int=None):
+    """
+    Goes through /r/hardwareswap/new and checks the title for any words to be in the name set AND is a selling post.
+    :param gpu_name_set: Set of GPU model words. nvidia, gtx, 1050 etc.
+    :param limit: How many submissions to check. When None, treats as limit=1000
+    :return: list of submission objects from PRAW
+    """
     hardware_new = reddit.subreddit("HardwareSwap").new(limit=limit)
     result_list = list()
     for submission in hardware_new:
         title = submission.title.split()
         for word in title:
-            if word in gpu_name_set and submission.link_flair_text == "SELLING":
+            if word.lower() in gpu_name_set and submission.link_flair_text in {"SELLING", "CLOSED"}:
                 print(submission.title)
                 result_list.append(submission)
                 break
@@ -29,4 +35,4 @@ def scrape_hws_new(limit=None):
 
 
 if __name__ == "__main__":
-    result_list = scrape_hws_new(limit=1000)
+    result_list = scrape_hws_new(gpu_name_set, limit=1000)
