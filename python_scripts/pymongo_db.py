@@ -7,7 +7,6 @@ from secrets import mongos_secrets
 client = MongoClient()
 db = client['Hardwarescrape']
 
-# reddit work - might be refactored into a function to be called
 
 
 example_submission_addition = {'post_id': 'd2awru',
@@ -27,9 +26,9 @@ def insert_reddit_submission_dict(submission:dict):
     if not submission:
         return "Error, submission object is None"
     coll = db['reddit']
-    if coll.find_one({'post_id':submission['_id']}): # _id cannot be a string but has to be an object_id
-        print(f'post_id : {submission.post_id} is already in database!')
-        pass
+    if coll.find_one({'post_id':submission['post_id']}): # _id cannot be a string but has to be an object_id
+        print(f'post_id : {submission["post_id"]} is already in database!')
+        return
     coll.insert_one(submission)
 
 if __name__ == '__main__':
