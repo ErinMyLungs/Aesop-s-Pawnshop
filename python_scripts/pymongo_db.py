@@ -1,10 +1,9 @@
 # Module creating and handling local MongosDB
 from pymongo import MongoClient
 import pymongo
-from bson.objectid import ObjectId
 from secrets import mongos_secrets
 
-client = MongoClient()
+client = MongoClient(mongos_secrets['host'], mongos_secrets['port'])
 db = client['Hardwarescrape']
 
 
@@ -26,12 +25,22 @@ def insert_reddit_submission_dict(submission:dict):
     if not submission:
         return "Error, submission object is None"
     coll = db['reddit']
-    if coll.find_one({'post_id':submission['post_id']}): # _id cannot be a string but has to be an object_id
+    if coll.find_one({'post_id':submission['post_id']}):
         print(f'post_id : {submission["post_id"]} is already in database!')
         return
     coll.insert_one(submission)
 
-if __name__ == '__main__':
-
+def init_db(collection_name: str='reddit', index_name: str = 'post_id'):
+    """
+    Creates an index for the collection. Intended to be used by running this module directly.
+    :param collection_name: Name of the collection
+    :param index_name: Name of the attribute to make an index
+    :return: Nothing
+    """
     collection = db['reddit']
     collection.create_index([("post_id", pymongo.TEXT)], unique=True)
+
+
+if __name__ == '__main__':
+    init_db()
+

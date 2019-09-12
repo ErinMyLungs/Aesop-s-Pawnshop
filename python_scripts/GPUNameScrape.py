@@ -75,7 +75,7 @@ def remove_adjectives_from_names(name: str):
         "192-bit",
     ]
     for adj in bad_list:
-        name = name.replace(adj, "")
+        name = name.lower().replace(adj.lower(), "")
     return name.strip()
 
 
@@ -87,10 +87,11 @@ def pd_series_to_set(series):
     """
     result_set = set()
     for value in series:
+        value = remove_adjectives_from_names(value)
         holder_set = {item for item in value.split()}
         for string in holder_set:
             if len(string) > 2:
-                result_set.add(remove_adjectives_from_names(string).lower())
+                result_set.add(string)
     return result_set
 
 
