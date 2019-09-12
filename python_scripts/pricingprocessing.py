@@ -30,7 +30,7 @@ def pull_pricing_draft(comparison_set: set, bad_set: set, collection_name: str='
     regex = re.compile(r'\$(\d{2,3})+', re.IGNORECASE)
     power_count = 0
     entries_count = 0
-    result_df = pd.DataFrame(columns=['title_select', 'selected_text', 'full_text', 'location_tag', 'post_id', 'author_id', 'author_trades', 'created'])
+    result_df = pd.DataFrame(columns=['title_select', 'selected_text', 'full_text', 'full_title', 'location_tag', 'post_id', 'author_id', 'author_trades', 'created'])
 
 
     for submission in cursor:
@@ -75,7 +75,8 @@ def append_results_to_df(high_idx, low_idx, selling_title_substring, submission,
     result_dict = {'title_select': selling_title_substring,
                   'selected_text': text[low_idx:high_idx],
                   'full_text': submission['self_text'],
-                  'location_tag': submission['title'][:8],
+                   'full_title': submission['title'],
+                  'location_tag': submission['title'][:submission['title'].find(']')+1],
                   'post_id': submission['post_id'],
                   'author_id': None,
                   'author_trades': None,
