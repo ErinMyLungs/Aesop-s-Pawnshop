@@ -5,12 +5,6 @@ import re
 import pickle
 from typing import Union
 import pandas as pd
-# $\d\d\d shipped
-# $\d\d\d + shipping
-# asking $\d\d\d shipped
-# asking $\d\d\d after shipping and fees
-# asking $\d\d\d OBO
-# \nNAMEOFPRODUCT | $\d\d\d
 
 def pull_pricing_draft(comparison_set: set, bad_set: set, collection_name: str='reddit', limit: Union[None,int]=10):
     """

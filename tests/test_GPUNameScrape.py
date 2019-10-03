@@ -2,6 +2,7 @@
 import pytest
 import pandas as pd
 import python_scripts.GPUNameScrape as gp
+from unittest.mock import patch
 
 test_name_list = [
     "GeForce 9300 GS[15]",
@@ -68,7 +69,6 @@ def test_remove_adjectives_from_names():
 
     #todo: fix result list because old function was updated to return lowered values
     assert [gp.remove_adjectives_from_names(name) for name in test_list] == [name.lower() for name in result_list]
-
 
 def test_scrape_gpu_names_wikipedia():
     pass

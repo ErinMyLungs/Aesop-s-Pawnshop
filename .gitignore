@@ -4,3 +4,4 @@ __pycache__*
 /env.py
 *.pytest_cache
 *.ipynb_checkpoints
+data/df.P
