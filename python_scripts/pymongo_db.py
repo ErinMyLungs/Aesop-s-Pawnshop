@@ -16,19 +16,19 @@ example_submission_addition = {'post_id': 'd2awru',
                                                'author_name': 'daewonmtg',
                                                'author_trade_info': 'Trades: 1'}}
 
-def insert_reddit_submission_dict(submission:dict):
+def insert_reddit_submission_dict(submission:dict, collection):
     """
-    Takes in submission dictionary created from submission object and inserts to mongosdb
+    Takes in submission dictionary created from submission object and inserts to mongodb
     :param submission: dictionary created from submission via PRAW
+    :param collection: pymongo collection object to insert submission into
     :return: none
     """
     if not submission:
         return "Error, submission object is None"
-    coll = db['reddit']
-    if coll.find_one({'post_id':submission['post_id']}):
+    if collection.find_one({'post_id':submission['post_id']}):
         print(f'post_id : {submission["post_id"]} is already in database!')
         return
-    coll.insert_one(submission)
+    collection.insert_one(submission)
 
 def init_db(collection_name: str='reddit', index_name: str = 'post_id'):
     """
