@@ -2,27 +2,42 @@ import pytest
 import python_scripts.pymongo_db as pymongo_db
 import mongomock
 from bson.son import SON
+from unittest.mock import patch
 
 
 @mongomock.patch(on_new='create')
 class TestDBInit:
     db = mongomock.MongoClient().db
-    collection = db.foobar
-    expected_index = {'_id_': {'v': 2, 'key': [('_id', 1)], 'ns': 'db.foobar'},
-                       'post_id_text': {'v': 2,
-                                        'unique': True,
-                                        'key': [('post_id', 'text')],
-                                        'ns': 'db.foobar',
-                                        }}
 
-    def test_init_db(self):
-        pymongo_db.init_db(self.collection)
 
-        initialized_index = self.collection.index_information()
-        print(initialized_index)
+    def test_init_db_nondefault_collection(self):
+        collection = self.db.foobar
+        expected_index = {'_id_': {'v': 2, 'key': [('_id', 1)], 'ns': 'db.foobar'},
+                          'post_id_text': {'v': 2,
+                                           'unique': True,
+                                           'key': [('post_id', 'text')],
+                                           'ns': 'db.foobar',
+                                           }}
+        pymongo_db.init_db(collection)
 
-        assert initialized_index == self.expected_index
+        initialized_index = collection.index_information()
 
+        assert initialized_index == expected_index
+
+    def test_init_db_non_default_index(self):
+        collection = self.db.fizzbuzz
+        index_name = 'fizzbuzz'
+        expected_index = {'_id_': {'v': 2, 'key': [('_id', 1)], 'ns': 'db.fizzbuzz'},
+                          'fizzbuzz_text': {'v': 2,
+                                           'unique': True,
+                                           'key': [('fizzbuzz', 'text')],
+                                           'ns': 'db.fizzbuzz',
+                                           }}
+
+        pymongo_db.init_db(collection, index_name=index_name)
+        initialized_index = collection.index_information()
+
+        assert initialized_index == expected_index
 
 
 @mongomock.patch(on_new='create')

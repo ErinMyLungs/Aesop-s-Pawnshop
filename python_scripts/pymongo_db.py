@@ -38,7 +38,7 @@ def init_db(collection: pymongo.collection.Collection=db.reddit, index_name: str
     :return: Nothing
     """
 
-    collection.create_index([("post_id", pymongo.TEXT)], unique=True)
+    collection.create_index([(index_name, pymongo.TEXT)], unique=True)
 
 
 if __name__ == '__main__':
