@@ -49,7 +49,9 @@ def test_pd_series_to_set():
         "TITAN",
     }
     # TODO: fix result_set because tested function is now returning lowered values instead of maintaining case.
-    assert gp.pd_series_to_set(test_df["name"]) == {value.lower() for value in result_set}
+    assert gp.pd_series_to_set(test_df["name"]) == {
+        value.lower() for value in result_set
+    }
     assert gp.pd_series_to_set(test_series) == {value.lower() for value in result_set}
 
 
@@ -67,8 +69,11 @@ def test_remove_adjectives_from_names():
         "GeForce GTX TITAN",
     ]
 
-    #todo: fix result list because old function was updated to return lowered values
-    assert [gp.remove_adjectives_from_names(name) for name in test_list] == [name.lower() for name in result_list]
+    # todo: fix result list because old function was updated to return lowered values
+    assert [gp.remove_adjectives_from_names(name) for name in test_list] == [
+        name.lower() for name in result_list
+    ]
+
 
 def test_scrape_gpu_names_wikipedia():
     pass
