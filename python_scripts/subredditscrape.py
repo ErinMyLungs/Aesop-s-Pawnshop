@@ -20,7 +20,7 @@ nvidia_names = pd.read_csv(
 gpu_name_set = pd_series_to_set(nvidia_names["name"])
 
 
-def scrape_hws_psaw_style(gpu_name_set: set, psaw_api=psaw_api, limit: int = None):
+def scrape_hws_psaw_style(gpu_name_set: set, psaw_api=psaw_api, limit: int = None, collection_name: str = "reddit"):
     """
     Uses PSAW and PRAW to scrape reddit posts and insert submissions that match criteria into mongodb.
     :param gpu_name_set: set of strings to search - typically created by pd_series_to_set helper func
@@ -31,6 +31,8 @@ def scrape_hws_psaw_style(gpu_name_set: set, psaw_api=psaw_api, limit: int = Non
     generator = psaw_api.search_submissions(
         subreddit="hardwareswap", before=1568147665, after=1546300800, limit=limit
     )  # scraping between 9/10/19 13:36 and 1/1/19 00:00
+    collection = db[collection_name]
+
 
     posts_processed = 0
     posts_inserted = 0
@@ -70,7 +72,7 @@ def scrape_hws_psaw_style(gpu_name_set: set, psaw_api=psaw_api, limit: int = Non
                 continue
 
             posts_processed += 1
-            insert_reddit_submission_dict(submission_dict)
+            insert_reddit_submission_dict(submission_dict, collection)
             posts_inserted += 1
         except StopIteration:
             print(

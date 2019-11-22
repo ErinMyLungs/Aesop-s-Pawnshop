@@ -32,25 +32,25 @@ def test_pd_series_to_set():
     test_df = pd.DataFrame(test_name_list, columns=["name"])
     test_series = pd.Series(test_name_list)
     result_set = {
-        "(G92)",
-        "(Notebook)[149]",
+        "v100",
+        "(g92)",
+        "9300",
+        "gpu",
+        "geforce",
+        "nvidia",
+        "(notebook)[149]",
         "(mezzanine)[188][189][190]",
+        "gtx",
+        "gs[15]",
         "1080",
         "8800",
-        "9300",
-        "GPU",
-        "GS[15]",
-        "GTX",
-        "GeForce",
-        "V100",
+        "titan",
+        "rtx",
         "accelerator",
-        "Nvidia",
-        "RTX",
-        "TITAN",
     }
-    # TODO: fix result_set because tested function is now returning lowered values instead of maintaining case.
-    assert gp.pd_series_to_set(test_df["name"]) == {value.lower() for value in result_set}
-    assert gp.pd_series_to_set(test_series) == {value.lower() for value in result_set}
+
+    assert gp.pd_series_to_set(test_df["name"]) == result_set
+    assert gp.pd_series_to_set(test_series) == result_set
 
 
 def test_remove_adjectives_from_names():
@@ -61,14 +61,14 @@ def test_remove_adjectives_from_names():
         "GeForce GTX TITAN Black",
     ]
     result_list = [
-        "GeForce 9800 GT",
-        "GeForce GTX 560 Ti",
-        "GeForce GTX 260",
-        "GeForce GTX TITAN",
+        "geforce 9800 gt",
+        "geforce gtx 560 ti",
+        "geforce gtx 260",
+        "geforce gtx titan",
     ]
 
-    #todo: fix result list because old function was updated to return lowered values
-    assert [gp.remove_adjectives_from_names(name) for name in test_list] == [name.lower() for name in result_list]
+    assert [gp.remove_adjectives_from_names(name) for name in test_list] == result_list
+
 
 def test_scrape_gpu_names_wikipedia():
     pass
