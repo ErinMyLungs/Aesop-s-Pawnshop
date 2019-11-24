@@ -19,24 +19,61 @@ example_data = {
     },
 }
 
-final_result_df = pd.read_csv("tests/test_resources/example_pp_df.csv", index_col=0)
-
-starter_df = final_result_df.copy(deep=True).drop(
-    columns=["price", "model", "is_ti", "trades"]
-)
 
 # model: 1660, is_ti: True, price: 255, trades: 0, created: 1568176182, post_id: d2dwp1
 
 
-def test_create_price_column():
-    """
-    Test helper function successfully creates price column
-    """
-    test_df = starter_df.copy(deep=True)
-    test_df = pp.create_price_column(
-        test_df, column_name="selected_text", target_column="price"
+class TestFrontendCleaning:
+    final_result_df = pd.read_csv("tests/test_resources/example_pp_df.csv", index_col=0)
+
+    starter_df = final_result_df.copy(deep=True).drop(
+        columns=["price", "model", "is_ti", "trades"]
     )
 
-    pd.testing.assert_frame_equal(
-        test_df, final_result_df.drop(columns=["model", "is_ti", "trades"])
-    )
+    def test_create_price_column_default(self):
+        """
+        Test helper function successfully creates price column with default values
+        """
+        test_df = self.starter_df.copy(deep=True)
+        test_df = pp.create_price_column(test_df)
+
+        pd.testing.assert_frame_equal(
+            test_df, self.final_result_df.drop(columns=["model", "is_ti", "trades"])
+        )
+
+    def test_create_price_column_nondefault_column_name(self):
+        test_df = self.starter_df.copy(deep=True).rename(
+            columns={"selected_text": "foo_bar"}
+        )
+
+        test_df = pp.create_price_column(test_df, column_name="foo_bar")
+
+        result_df = self.final_result_df.drop(
+            columns=["model", "is_ti", "trades"]
+        ).rename(columns={"selected_text": "foo_bar"})
+
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+    def test_create_price_column_nondefault_column_target(self):
+        test_df = self.starter_df.copy(deep=True).rename(
+            columns={"selected_text": "foo"}
+        )
+
+        test_df = pp.create_price_column(
+            test_df, column_name="foo", target_column="bar"
+        )
+
+        result_df = self.final_result_df.drop(
+            columns=["model", "is_ti", "trades"]
+        ).rename(columns={"selected_text": "foo", "price": "bar"})
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+    def test_create_price_column_nondefault_target(self):
+        test_df = self.starter_df.copy(deep=True)
+
+        test_df = pp.create_price_column(test_df, target_column="bar")
+
+        result_df = self.final_result_df.drop(
+            columns=["model", "is_ti", "trades"]
+        ).rename(columns={"price": "bar"})
+        pd.testing.assert_frame_equal(test_df, result_df)
