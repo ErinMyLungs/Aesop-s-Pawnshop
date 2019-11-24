@@ -1,9 +1,18 @@
+#webscraping from reddit packages
 praw
 psaw
-pandas
-pymongo
-mongomock
-numpy
+beautifulsoup4 # technically for wikipedia scraping
+
+#front end packages
 flask
+pymongo #also used to store data
+
+#testing packages for TDD
+mongomock
 pytest
-beautifulsoup4
+
+#data science stack
+pandas
+numpy
+matplotlib
+scipy
