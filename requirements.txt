@@ -1,6 +1,9 @@
 praw
+psaw
 pandas
 pymongo
 mongomock
 numpy
 flask
+pytest
+beautifulsoup4

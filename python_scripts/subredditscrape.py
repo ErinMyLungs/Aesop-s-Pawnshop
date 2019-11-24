@@ -4,6 +4,7 @@ from psaw import PushshiftAPI
 from .secrets import reddit_app_key, reddit_secret_key
 from .GPUNameScrape import pd_series_to_set
 from .pymongo_db import db, insert_reddit_submission_dict
+import os
 
 reddit = praw.Reddit(
     client_id=reddit_app_key,
@@ -13,14 +14,20 @@ reddit = praw.Reddit(
 
 psaw_api = PushshiftAPI(reddit)
 
-nvidia_names = pd.read_csv(
-    "/home/erin/PycharmProjects/HardwareScrape/data/nvidia_clean_names.csv", index_col=0
-).rename({"0": "name"}, axis=1)
+if os.path.exists("data/nvidia_clean_names.csv"):
+    nvidia_names = pd.read_csv("data/nvidia_clean_names.csv", index_col=0).rename(
+        {"0": "name"}, axis=1
+    )
 
 gpu_name_set = pd_series_to_set(nvidia_names["name"])
 
 
-def scrape_hws_psaw_style(gpu_name_set: set, psaw_api=psaw_api, limit: int = None, collection_name: str = "reddit"):
+def scrape_hws_psaw_style(
+    gpu_name_set: set,
+    psaw_api=psaw_api,
+    limit: int = None,
+    collection_name: str = "reddit",
+):
     """
     Uses PSAW and PRAW to scrape reddit posts and insert submissions that match criteria into mongodb.
     :param gpu_name_set: set of strings to search - typically created by pd_series_to_set helper func
@@ -32,7 +39,6 @@ def scrape_hws_psaw_style(gpu_name_set: set, psaw_api=psaw_api, limit: int = Non
         subreddit="hardwareswap", before=1568147665, after=1546300800, limit=limit
     )  # scraping between 9/10/19 13:36 and 1/1/19 00:00
     collection = db[collection_name]
-
 
     posts_processed = 0
     posts_inserted = 0
@@ -79,6 +85,7 @@ def scrape_hws_psaw_style(gpu_name_set: set, psaw_api=psaw_api, limit: int = Non
                 f"end of loop, {posts_processed} processed, {posts_inserted} inserted"
             )
             break
+
 
 if __name__ == "__main__":
     scrape_hws_psaw_style(gpu_name_set=gpu_name_set, limit=None)
