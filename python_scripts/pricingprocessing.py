@@ -194,13 +194,21 @@ def create_price_column(
     return dataframe
 
 
-def extract_model_information(dataframe: pd.core.frame.DataFrame):
+def extract_model_information(
+    dataframe: pd.core.frame.DataFrame, column_name="title_select"
+):
     """
     Create df with model and ti status returned
     :param dataframe:
     :return: dataframe with two new columns
     """
-    model_info_frame = dataframe.title_select.str.extract(
+    if column_name not in dataframe.columns:
+        error_string = f"column {column_name} does not exist in dataframe!"
+        if "title_select" in dataframe.columns:
+            error_string += " Did you mean to use title_select column?"
+        raise ValueError(error_string)
+
+    model_info_frame = dataframe.loc[:, column_name].str.extract(
         pat=r"(\d{3,4})[^(4790k)](ti)?", flags=re.IGNORECASE
     )
     dataframe = pd.concat([dataframe, model_info_frame], axis=1)

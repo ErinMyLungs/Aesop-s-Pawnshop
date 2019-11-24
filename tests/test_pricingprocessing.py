@@ -82,3 +82,36 @@ class TestFrontendCleaning:
         test_df = self.starter_df.copy(deep=True)
         with pytest.raises(ValueError):
             test_df = pp.create_price_column(test_df, column_name="non_existent_column")
+
+    def test_extract_model_information(self):
+        """
+        tests helper function extract_model_information
+        """
+        result_df = self.final_result_df.drop(columns=["price", "trades"])
+
+        test_df = self.starter_df.copy(deep=True)
+        test_df = pp.extract_model_information(test_df)
+
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+        test_df = self.starter_df.copy(deep=True)
+        test_df = pp.extract_model_information(test_df, column_name="title_select")
+
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+    def test_extract_model_info_non_default(self):
+        result_df = self.final_result_df.drop(columns=["price", "trades"]).rename(
+            columns={"title_select": "foobar"}
+        )
+
+        test_df = self.starter_df.copy(deep=True).rename(
+            columns={"title_select": "foobar"}
+        )
+        test_df = pp.extract_model_information(test_df, column_name="foobar")
+
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+    def test_extract_model_info_missing_column(self):
+        test_df = self.starter_df.copy(deep=True)
+        with pytest.raises(ValueError):
+            test_df = pp.extract_model_information(test_df, column_name="foobar")
