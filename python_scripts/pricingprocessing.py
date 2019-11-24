@@ -7,6 +7,7 @@ from typing import Union
 import pandas as pd
 import numpy as np
 import os
+import inspect
 
 
 def pull_pricing_draft(
@@ -170,6 +171,30 @@ def load_comparison_pickle(
     return comparison_set, bad_set
 
 
+def column_not_in_frame_error(dataframe, column_name, func):
+    """
+    Helper function to raise errors if column_name not in dataframe for front-end cleaner functions
+    :param dataframe: dataframe to check that column is in
+    :param column_name: column_name data to process is in
+    :param func: function being called
+    :return: None, raises error on ValueError
+    """
+    sig = inspect.signature(func)
+    column_name_param = sig.parameters.get("column_name")
+
+    if column_name not in dataframe.columns:
+        error_string = f"column {column_name} does not exist in dataframe!"
+
+        if column_name_param:
+            default_column_name_string = column_name_param.default
+
+            if default_column_name_string in dataframe.columns:
+                error_string += (
+                    f" Did you mean to use {default_column_name_string} column?"
+                )
+        raise ValueError(error_string)
+
+
 def create_price_column(
     dataframe: pd.core.frame.DataFrame,
     column_name: str = "selected_text",
@@ -182,11 +207,7 @@ def create_price_column(
     :param target_column: column to create
     :return: dataframe with new target column created
     """
-    if column_name not in dataframe.columns:
-        error_string = f"column {column_name} does not exist in dataframe!"
-        if "selected_text" in dataframe.columns:
-            error_string += " Did you mean to use selected_text column?"
-        raise ValueError(error_string)
+    column_not_in_frame_error(dataframe, column_name, create_price_column)
 
     dataframe.loc[:, target_column] = dataframe.loc[:, column_name].map(
         lambda x: int(x[x.find("$") + 1 :])
@@ -202,11 +223,7 @@ def extract_model_information(
     :param dataframe:
     :return: dataframe with two new columns
     """
-    if column_name not in dataframe.columns:
-        error_string = f"column {column_name} does not exist in dataframe!"
-        if "title_select" in dataframe.columns:
-            error_string += " Did you mean to use title_select column?"
-        raise ValueError(error_string)
+    column_not_in_frame_error(dataframe, column_name, extract_model_information)
 
     model_info_frame = dataframe.loc[:, column_name].str.extract(
         pat=r"(\d{3,4})[^(4790k)](ti)?", flags=re.IGNORECASE
@@ -220,13 +237,15 @@ def extract_model_information(
     return dataframe
 
 
-def extract_trades_info(dataframe):
+def extract_trades_info(dataframe, column_name="author_trades"):
     """
     Extracts trade number and sets NaNs to 0 (assumes no trades)
     :param dataframe: dataframe to transform
     :return: dataframe with 'trades' column
     """
-    trades = dataframe.author_trades.str.extract(pat=r"(\d{1,3})")
+    column_not_in_frame_error(dataframe, column_name, extract_trades_info)
+
+    trades = dataframe.loc[:, column_name].str.extract(pat=r"(\d{1,3})")
     dataframe = pd.concat([dataframe, trades], axis=1).rename(columns={0: "trades"})
     dataframe.loc[:, "trades"] = dataframe.trades.map(
         lambda x: int(x) if not np.isnan(float(x)) else 0

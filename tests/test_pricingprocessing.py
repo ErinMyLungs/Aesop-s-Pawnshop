@@ -115,3 +115,34 @@ class TestFrontendCleaning:
         test_df = self.starter_df.copy(deep=True)
         with pytest.raises(ValueError):
             test_df = pp.extract_model_information(test_df, column_name="foobar")
+
+    def test_extract_trade_info(self):
+        result_df = self.final_result_df.drop(columns=["price", "model", "is_ti",])
+
+        test_df = self.starter_df.copy(deep=True)
+        test_df = pp.extract_trades_info(test_df)
+
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+        test_df = self.starter_df.copy(deep=True)
+        test_df = pp.extract_trades_info(test_df, column_name="author_trades")
+
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+        with pytest.raises(ValueError):
+            pp.extract_trades_info(test_df, column_name="foobar")
+
+    def test_extract_trade_info_non_default(self):
+        result_df = self.final_result_df.drop(
+            columns=["price", "model", "is_ti",]
+        ).rename(columns={"author_trades": "foobar"})
+
+        test_df = self.starter_df.copy(deep=True).rename(
+            columns={"author_trades": "foobar"}
+        )
+        test_df = pp.extract_trades_info(test_df, column_name="foobar")
+
+        pd.testing.assert_frame_equal(test_df, result_df)
+
+        with pytest.raises(ValueError):
+            pp.extract_trades_info(test_df)
