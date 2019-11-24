@@ -72,6 +72,7 @@ def scrape_hws_psaw_style(
                         "created": submission_object.created,
                         "author_info": author_dict,
                     }
+                    # TODO: Add break after success find? No need to re-query/acquire author info if matched once
 
             if not submission_dict:
                 posts_processed += 1

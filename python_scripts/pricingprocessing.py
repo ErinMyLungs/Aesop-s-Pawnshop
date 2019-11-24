@@ -5,6 +5,7 @@ import re
 import pickle
 from typing import Union
 import pandas as pd
+import numpy as np
 import os
 
 
@@ -167,6 +168,64 @@ def load_comparison_pickle(
         bad_set = pickle.load(pickle_file)
 
     return comparison_set, bad_set
+
+
+def create_price_column(
+    dataframe: pd.core.frame.DataFrame,
+    column_name: str = "selected_text",
+    target_column: str = "price",
+):
+    """
+    Uses regex to parse out price and turn to int for easy statistics
+    :param dataframe: dataframe of GPU information
+    :param column_name: string column (object) to parse
+    :param target_column: column to create
+    :return: dataframe with new target column created
+    """
+    dataframe.loc[:, target_column] = dataframe.loc[:, column_name].map(
+        lambda x: int(x[x.find("$") + 1 :])
+    )
+    return dataframe
+
+
+def extract_model_information(dataframe: pd.core.frame.DataFrame):
+    """
+    Create df with model and ti status returned
+    :param dataframe:
+    :return: dataframe with two new columns
+    """
+    model_info_frame = dataframe.title_select.str.extract(
+        pat=r"(\d{3,4})[^(4790k)](ti)?", flags=re.IGNORECASE
+    )
+    dataframe = pd.concat([dataframe, model_info_frame], axis=1)
+    dataframe = dataframe.rename(columns={0: "model", 1: "is_ti"})
+
+    dataframe.loc[:, "is_ti"] = dataframe.is_ti.notna()
+    dataframe.loc[:, "model"] = dataframe.model.astype(int)
+
+    return dataframe
+
+
+def extract_trades_info(dataframe):
+    """
+    Extracts trade number and sets NaNs to 0 (assumes no trades)
+    :param dataframe: dataframe to transform
+    :return: dataframe with 'trades' column
+    """
+    trades = dataframe.author_trades.str.extract(pat=r"(\d{1,3})")
+    dataframe = pd.concat([dataframe, trades], axis=1).rename(columns={0: "trades"})
+    dataframe.loc[:, "trades"] = dataframe.trades.map(
+        lambda x: int(x) if not np.isnan(float(x)) else 0
+    )
+    return dataframe
+
+
+def front_end_data_cleanup(dataframe):
+    # TODO: Clean and refactor this up so it's a lot more presentable
+    dataframe = create_price_column(dataframe)
+    dataframe = extract_model_information(dataframe)
+    dataframe = extract_trades_info(dataframe)
+    return dataframe
 
 
 if __name__ == "__main__":
