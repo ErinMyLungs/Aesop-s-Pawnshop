@@ -182,6 +182,12 @@ def create_price_column(
     :param target_column: column to create
     :return: dataframe with new target column created
     """
+    if column_name not in dataframe.columns:
+        error_string = f"column {column_name} does not exist in dataframe!"
+        if "selected_text" in dataframe.columns:
+            error_string += " Did you mean to use selected_text column?"
+        raise ValueError(error_string)
+
     dataframe.loc[:, target_column] = dataframe.loc[:, column_name].map(
         lambda x: int(x[x.find("$") + 1 :])
     )

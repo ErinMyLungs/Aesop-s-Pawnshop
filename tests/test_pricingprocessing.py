@@ -77,3 +77,8 @@ class TestFrontendCleaning:
             columns=["model", "is_ti", "trades"]
         ).rename(columns={"price": "bar"})
         pd.testing.assert_frame_equal(test_df, result_df)
+
+    def test_create_price_column_wrong_column_name_argument(self):
+        test_df = self.starter_df.copy(deep=True)
+        with pytest.raises(ValueError):
+            test_df = pp.create_price_column(test_df, column_name="non_existent_column")
