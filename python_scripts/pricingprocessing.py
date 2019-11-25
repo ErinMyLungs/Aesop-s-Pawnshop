@@ -278,24 +278,27 @@ def create_curated_frontend_dataframe(dataframe):
         2070,
         2080,
     }
+    columns_of_interest = [
+        "post_id",
+        "full_title",
+        "created",
+        "price",
+        "model",
+        "is_ti",
+        "trades",
+        "full_text",
+    ]
+
+    for colname in columns_of_interest:
+        column_not_in_frame_error(dataframe, colname, create_curated_frontend_dataframe)
+
     dataframe = dataframe.dropna(axis=0, subset=["model"])
     dataframe.loc[:, "model"] = dataframe.loc[:, "model"].astype(int)
     dataframe.loc[:, "interest"] = dataframe.loc[:, "model"].map(
         lambda x: x in models_of_interest
     )
     curated_dataframe = dataframe.loc[dataframe.interest == True]
-    curated_dataframe = curated_dataframe[
-        [
-            "post_id",
-            "full_title",
-            "created",
-            "price",
-            "model",
-            "is_ti",
-            "trades",
-            "full_text",
-        ]
-    ]
+    curated_dataframe = curated_dataframe[columns_of_interest]
     return curated_dataframe
 
 

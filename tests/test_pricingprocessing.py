@@ -135,3 +135,51 @@ class TestFrontendCleaning:
         test_df = pp.front_end_data_cleanup(test_df)
 
         pd.testing.assert_frame_equal(test_df, self.final_result_df)
+
+    def test_create_curated_frontend_dataframe(self):
+        test_df = self.starter_df.copy(deep=True)
+
+        result_df = self.final_result_df.copy(deep=True)
+        result_df = result_df[
+            [
+                "post_id",
+                "full_title",
+                "created",
+                "price",
+                "model",
+                "is_ti",
+                "trades",
+                "full_text",
+            ]
+        ]
+        result_df.loc[:, "model"] = result_df.model.astype(int)
+
+        cleaned_df = pp.front_end_data_cleanup(test_df)
+        curated_df = pp.create_curated_frontend_dataframe(cleaned_df)
+
+        pd.testing.assert_frame_equal(curated_df, result_df)
+
+    def test_curated_dataframe_wrong_columns(self):
+        """
+        Tests that all columns of interest throw an error if don't exist in DF
+        """
+        columns_of_interest = [
+            "post_id",
+            "full_title",
+            "created",
+            "price",
+            "model",
+            "is_ti",
+            "trades",
+            "full_text",
+        ]
+        test_df = self.starter_df.copy(deep=True)
+
+        cleaned_df = pp.front_end_data_cleanup(test_df)
+        for colname in columns_of_interest:
+            cleaned_df = cleaned_df.rename(columns={colname: "foobar"})
+
+            with pytest.raises(ValueError):
+                pp.create_curated_frontend_dataframe(cleaned_df)
+
+            cleaned_df = cleaned_df.rename(columns={"foobar": colname})
