@@ -232,7 +232,7 @@ def extract_model_information(
     dataframe = dataframe.rename(columns={0: "model", 1: "is_ti"})
 
     dataframe.loc[:, "is_ti"] = dataframe.is_ti.notna()
-    dataframe.loc[:, "model"] = dataframe.model.astype(int)
+    dataframe.loc[:, "model"] = dataframe.model.astype(float)
 
     return dataframe
 
@@ -251,6 +251,52 @@ def extract_trades_info(dataframe, column_name="author_trades"):
         lambda x: int(x) if not np.isnan(float(x)) else 0
     )
     return dataframe
+
+
+def create_curated_frontend_dataframe(dataframe):
+    """
+    Takes cleaned DF and extracts relevant information to insert into mongoDB
+    :param dataframe: Cleaned dataframe with columns post_id, full_title, created, price, model, is_ti, trades, full_text
+    :return: dataframe without nans and ready to be turned into mongodb document records
+    """
+    # TODO: Make models not be hardcoded. Note this accounts for 91% of our rows!!!
+    models_of_interest = {
+        760,
+        780,
+        950,
+        960,
+        970,
+        980,
+        1030,
+        1050,
+        1060,
+        1070,
+        1080,
+        1650,
+        1660,
+        2060,
+        2070,
+        2080,
+    }
+    dataframe = dataframe.dropna(axis=0, subset=["model"])
+    dataframe.loc[:, "model"] = dataframe.loc[:, "model"].astype(int)
+    dataframe.loc[:, "interest"] = dataframe.loc[:, "model"].map(
+        lambda x: x in models_of_interest
+    )
+    curated_dataframe = dataframe.loc[dataframe.interest == True]
+    curated_dataframe = curated_dataframe[
+        [
+            "post_id",
+            "full_title",
+            "created",
+            "price",
+            "model",
+            "is_ti",
+            "trades",
+            "full_text",
+        ]
+    ]
+    return curated_dataframe
 
 
 def front_end_data_cleanup(dataframe):
