@@ -1,6 +1,6 @@
 # module for searching and pulling out pricing data from mongo documents
 import pymongo
-from .pymongo_db import db
+from .pymongo_db import db, bulk_insert_fontend_data
 import re
 import pickle
 from typing import Union
@@ -253,6 +253,14 @@ def extract_trades_info(dataframe, column_name="author_trades"):
     return dataframe
 
 
+def front_end_data_cleanup(dataframe):
+    # TODO: Clean and refactor this up so it's a lot more presentable
+    dataframe = create_price_column(dataframe)
+    dataframe = extract_model_information(dataframe)
+    dataframe = extract_trades_info(dataframe)
+    return dataframe
+
+
 def create_curated_frontend_dataframe(dataframe):
     """
     Takes cleaned DF and extracts relevant information to insert into mongoDB
@@ -302,17 +310,27 @@ def create_curated_frontend_dataframe(dataframe):
     return curated_dataframe
 
 
-def front_end_data_cleanup(dataframe):
-    # TODO: Clean and refactor this up so it's a lot more presentable
-    dataframe = create_price_column(dataframe)
-    dataframe = extract_model_information(dataframe)
-    dataframe = extract_trades_info(dataframe)
-    return dataframe
+def frontend_datapipeline(
+    collection_to_pull: str, collection_to_insert: str,
+):
+    """
+    Full processing pipeline to go from raw data to frontend data in the frontend collection
+    :param collection_to_pull: name of collection to pull raw data from
+    :param collection_to_insert: name of collection to insert cleaned data to
+    :return: None
+    """
+    comparison_set, bad_set = load_comparison_pickle(
+        "/home/erin/PycharmProjects/Aesops-Pawnshop/data/comp_set_pickle.P",
+        "/home/erin/PycharmProjects/Aesops-Pawnshop/data/bad_set.P",
+    )
+    dataframe = pull_pricing_draft(
+        comparison_set, bad_set, collection_name=collection_to_pull, limit=None
+    )
+    dataframe = front_end_data_cleanup(dataframe)
+    curated_df = create_curated_frontend_dataframe(dataframe)
+    submission_list = curated_df.to_dict(orient="records")
+    bulk_insert_fontend_data(submission_list, collection=db[collection_to_insert])
 
 
 if __name__ == "__main__":
-
-    comparison_set, bad_set = load_comparison_pickle()
-    # if not comparison_set:
-    # TODO: Can this be setup so if the pickle fails to load it'll throw an error and stop the execution?
-    df = pull_pricing_draft(comparison_set, bad_set=bad_set, limit=None)
+    frontend_datapipeline("reddit", "frontend")

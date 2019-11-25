@@ -22,6 +22,21 @@ def insert_reddit_submission_dict(submission: dict, collection):
     collection.insert_one(submission)
 
 
+def bulk_insert_fontend_data(
+    submission: list, collection: pymongo.collection.Collection = db.frontend
+):
+    """
+    Takes in bulk list of dictionaries and bulk inserts into defined collection
+    :param submission: list of dictionaries
+    :param collection:
+    :return:
+    """
+    if not submission:
+        raise ValueError("Submission object is None!")
+
+    collection.insert_many(submission)
+
+
 def init_db(
     collection: pymongo.collection.Collection = db.reddit, index_name: str = "post_id"
 ):
@@ -36,4 +51,8 @@ def init_db(
 
 
 if __name__ == "__main__":
-    init_db()
+    collections = [db.reddit, db.frontend]
+    for col in collections:
+        if col.index_information().get("post_id_text"):
+            continue
+        init_db(col)
