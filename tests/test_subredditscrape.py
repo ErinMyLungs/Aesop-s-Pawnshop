@@ -1,6 +1,7 @@
 import pytest
-import python_scripts.subredditscrape as ss
+import src.subredditscrape as ss
 from unittest.mock import patch
+
 
 def test_scrape_hws():
     # psaw mock to generate fake posts to run through

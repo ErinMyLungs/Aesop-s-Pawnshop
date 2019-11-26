@@ -3,7 +3,7 @@
 import pytest
 from bson import ObjectId
 import pandas as pd
-import python_scripts.pricingprocessing as pp
+import src.pricingprocessing as pp
 
 
 class TestFrontendCleaning:

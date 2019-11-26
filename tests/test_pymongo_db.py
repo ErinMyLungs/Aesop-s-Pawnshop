@@ -1,6 +1,6 @@
 # Unit tests for pymongo_db
 import pytest
-import python_scripts.pymongo_db as pymongo_db
+import src.pymongo_db as pymongo_db
 import mongomock
 
 

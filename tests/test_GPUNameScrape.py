@@ -1,7 +1,7 @@
 # Tests the GPUNameScrape.py module. Function names are 1:1 for what they're testing in the module.
 import pytest
 import pandas as pd
-import python_scripts.GPUNameScrape as gp
+import src.GPUNameScrape as gp
 from unittest.mock import patch
 
 test_name_list = [

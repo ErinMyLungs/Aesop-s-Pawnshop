@@ -4,6 +4,7 @@ psaw
 beautifulsoup4 # technically for wikipedia scraping
 
 #front end packages
+dash
 flask
 pymongo #also used to store data
 

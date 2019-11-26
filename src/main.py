@@ -1,4 +1,4 @@
-from python_scripts import secrets
+from src import secrets
 import praw
 import datetime
 from .secrets import reddit_app_key, reddit_secret_key
