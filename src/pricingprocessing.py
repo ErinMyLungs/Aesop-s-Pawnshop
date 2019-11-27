@@ -30,6 +30,7 @@ def pull_pricing_draft(
     else:
         cursor = collection.find()
     # regex_2 = re.compile(r'\$(\d{2,3})+.?(shipp)?(ed|ing)?(OBO)?', re.IGNORECASE) #Searches for $ two or 3 numbers and shipp (ing or ed) or OBO optional.
+    # TODO: This breaks GPUs where price > 999, need to fix.
     regex = re.compile(r"\$(\d{2,3})+", re.IGNORECASE)
     power_count = 0
     entries_count = 0

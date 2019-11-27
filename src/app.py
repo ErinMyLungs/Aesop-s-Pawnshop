@@ -7,6 +7,8 @@ from src.pymongo_db import db
 import pandas as pd
 import numpy as np
 
+# TODO: Refactor this to hell and back because it's currently pretty terrible
+
 collection = db["frontend"]
 
 
@@ -34,17 +36,18 @@ def create_data_for_barchart(collection):
         if (grouped_ti.model == model).sum() == 0:
             grouped_ti.append(row, ignore_index=True)
 
-        return grouped_ti, grouped_nonti
+        return base_dataframe, grouped_ti, grouped_nonti
 
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-ti_data, nonti_data = create_data_for_barchart(collection)
+raw, ti_data, nonti_data = create_data_for_barchart(collection)
+
 
 app.layout = html.Div(
-    children=[
+    [
         html.H1(children="Used GPU Market on /r/hardwareswap"),
         html.Div(
             children="""
@@ -52,7 +55,7 @@ app.layout = html.Div(
     """
         ),
         dcc.Graph(
-            id="example-graph",
+            id="gpu-bar-chart",
             figure={
                 "data": [
                     {
@@ -68,11 +71,64 @@ app.layout = html.Div(
                         "name": "TI",
                     },
                 ],
-                "layout": {"title": "Average GPU Price in Dollars"},
+                "layout": {
+                    "title": "Average GPU Price in Dollars",
+                    "clickmode": "event",
+                },
             },
+        ),
+        dcc.Graph(
+            id="model-price-over-time-lineplot",
+            figure={"data": [], "layout": {"title": "model price over time"}},
         ),
     ]
 )
+
+
+@app.callback(
+    Output("model-price-over-time-lineplot", "figure"),
+    [Input("gpu-bar-chart", "clickData")],
+)
+def display_click_data(clickData):
+    if not clickData:
+        return {"data": [dict(x=0, y=0, ids=0, type="plot", mode="lines+markers",)]}
+
+    ti = False
+    if len(clickData.get("points")) == 2:
+        ti = True
+
+    traces = []
+
+    model = clickData.get("points")[0].get("x")
+    if not model:
+        return
+
+    model = int(model[model.find(" ") + 1 :])
+    non_ti_model_data = raw.loc[raw.is_ti == False].loc[raw.model == model]
+
+    traces.append(
+        dict(
+            x=non_ti_model_data.created,
+            y=non_ti_model_data.price,
+            ids=non_ti_model_data.post_id,
+            type="plot",
+            mode="lines+markers",
+            name=f"GTX {model}",
+        )
+    )
+    if ti:
+        ti_model_data = raw.loc[raw.is_ti == True].loc[raw.model == model]
+        traces.append(
+            dict(
+                x=ti_model_data.created,
+                y=ti_model_data.price,
+                ids=ti_model_data.post_id,
+                type="plot",
+                mode="lines+markers",
+                name=f"GTX {model}Ti",
+            )
+        )
+    return {"data": traces}
 
 
 if __name__ == "__main__":
