@@ -74,6 +74,9 @@ app.layout = html.Div(
                 "layout": {
                     "title": "Average GPU Price in Dollars",
                     "clickmode": "event",
+                    "xaxis":{"title":"GPU Model (Arranged by Generation)"},
+                    "yaxis":{"title":"Average Cost USD"}
+
                 },
             },
         ),
@@ -128,7 +131,11 @@ def display_click_data(clickData):
                 name=f"GTX {model}Ti",
             )
         )
-    return {"data": traces}
+    return {"data": traces,
+            "layout": {"title": f"Model {model} price over time",
+                       "xaxis":{"title":"Date"},
+                       "yaxis":{"title":"Sale Price USD"}
+                       }}
 
 
 if __name__ == "__main__":
