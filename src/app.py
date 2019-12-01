@@ -12,8 +12,26 @@ import numpy as np
 collection = db["frontend"]
 
 
+def create_date_labels(dataframe):
+    """
+    Create date_labels column for easy labeling of our line plot
+    :param dataframe: dataframe with created column
+    :return: dataframe with date_label column
+    """
+    dataframe.loc[:, "created_datetime"] = pd.to_datetime(dataframe.created, unit="s")
+    dataframe.loc[:, "date_label"] = dataframe.created_datetime.map(
+        lambda x: f"{x.month}-{x.day}-{x.year}"
+    )
+    dataframe.drop(axis=0, columns="created_datetime", inplace=True)
+    return dataframe
+
+
 def create_data_for_barchart(collection):
+
     base_dataframe = pd.DataFrame.from_records(collection.find())
+
+    base_dataframe = create_date_labels(base_dataframe)
+
     all_models = list(np.unique(base_dataframe.model))
     ti_df = base_dataframe.loc[base_dataframe.is_ti == True]
     nonti_df = base_dataframe.loc[base_dataframe.is_ti == False]
@@ -74,9 +92,8 @@ app.layout = html.Div(
                 "layout": {
                     "title": "Average GPU Price in Dollars",
                     "clickmode": "event",
-                    "xaxis":{"title":"GPU Model (Arranged by Generation)"},
-                    "yaxis":{"title":"Average Cost USD"}
-
+                    "xaxis": {"title": "GPU Model (Arranged by Generation)"},
+                    "yaxis": {"title": "Average Cost USD"},
                 },
             },
         ),
@@ -109,6 +126,9 @@ def display_click_data(clickData):
     model = int(model[model.find(" ") + 1 :])
     non_ti_model_data = raw.loc[raw.is_ti == False].loc[raw.model == model]
 
+    ticktext = list(non_ti_model_data.date_label.values)
+    tickval = list(non_ti_model_data.created.values)
+
     traces.append(
         dict(
             x=non_ti_model_data.created,
@@ -121,6 +141,10 @@ def display_click_data(clickData):
     )
     if ti:
         ti_model_data = raw.loc[raw.is_ti == True].loc[raw.model == model]
+
+        ticktext.extend(list(ti_model_data.date_label.values))
+        tickval.extend(list(ti_model_data.created.values))
+
         traces.append(
             dict(
                 x=ti_model_data.created,
@@ -131,11 +155,18 @@ def display_click_data(clickData):
                 name=f"GTX {model}Ti",
             )
         )
-    return {"data": traces,
-            "layout": {"title": f"Model {model} price over time",
-                       "xaxis":{"title":"Date"},
-                       "yaxis":{"title":"Sale Price USD"}
-                       }}
+    return {
+        "data": traces,
+        "layout": {
+            "title": f"Model {model} price over time",
+            "xaxis": {
+                "title": "Date",
+                "ticktext": ticktext[::4],
+                "tickvals": tickval[::4],
+            },
+            "yaxis": {"title": "Sale Price USD"},
+        },
+    }
 
 
 if __name__ == "__main__":
