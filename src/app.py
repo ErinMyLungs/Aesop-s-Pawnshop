@@ -155,14 +155,21 @@ def display_click_data(clickData):
                 name=f"GTX {model}Ti",
             )
         )
+    if len(ticktext) > 10: #This logic culls the ticktext from everything to one that is at each 10% of the data (min, 10%, 20%,..., max) so x-tick labels are less cluttered
+        quartiles = np.arange(0,110, 10) #generate np array 0 -> 100 in 10s
+        percentile = np.percentile(tickval, quartiles, interpolation='nearest')
+        positions = [np.argwhere(tickval == perc).item() for perc in percentile]
+        ticktext = [ticktext[pos] for pos in positions]
+        tickval = [tickval[pos] for pos in positions]
+
     return {
         "data": traces,
         "layout": {
             "title": f"Model {model} price over time",
             "xaxis": {
                 "title": "Date",
-                "ticktext": ticktext[::4],
-                "tickvals": tickval[::4],
+                "ticktext": ticktext,
+                "tickvals": tickval,
             },
             "yaxis": {"title": "Sale Price USD"},
         },
@@ -170,4 +177,9 @@ def display_click_data(clickData):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    aws = False
+
+    if aws:
+        app.run_server(debug=False, host='0.0.0.0', port=80)
+    else:
+        app.run_server(debug=True)
