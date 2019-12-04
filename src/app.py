@@ -3,7 +3,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from src.pymongo_db import db
+from pymongo_db import db
 import pandas as pd
 import numpy as np
 
@@ -27,7 +27,11 @@ def create_date_labels(dataframe):
 
 
 def create_data_for_barchart(collection):
-
+    """
+    Creates dataframes with data from front-end collection and pre-processes it for dashboard
+    :param collection: collection where front-end preprocessed data lives
+    :return: tuple of base dataframe and the aggregated ti and non-ti dataframes
+    """
     base_dataframe = pd.DataFrame.from_records(collection.find())
 
     base_dataframe = create_date_labels(base_dataframe)
@@ -110,6 +114,11 @@ app.layout = html.Div(
     [Input("gpu-bar-chart", "clickData")],
 )
 def display_click_data(clickData):
+    """
+    Callback function that adds interactivity to bar chart above -> on click sends model data to line plot below
+    :param clickData: Callback val from gpu-bar-chart
+    :return: updated lineplot
+    """
     if not clickData:
         return {"data": [dict(x=0, y=0, ids=0, type="plot", mode="lines+markers",)]}
 
@@ -155,9 +164,11 @@ def display_click_data(clickData):
                 name=f"GTX {model}Ti",
             )
         )
-    if len(ticktext) > 10: #This logic culls the ticktext from everything to one that is at each 10% of the data (min, 10%, 20%,..., max) so x-tick labels are less cluttered
-        quartiles = np.arange(0,110, 10) #generate np array 0 -> 100 in 10s
-        percentile = np.percentile(tickval, quartiles, interpolation='nearest')
+    if (
+        len(ticktext) > 10
+    ):  # This logic culls the ticktext from everything to one that is at each 10% of the data (min, 10%, 20%,..., max) so x-tick labels are less cluttered
+        quartiles = np.arange(0, 110, 10)  # generate np array 0 -> 100 in 10s
+        percentile = np.percentile(tickval, quartiles, interpolation="nearest")
         positions = [np.argwhere(tickval == perc).item() for perc in percentile]
         ticktext = [ticktext[pos] for pos in positions]
         tickval = [tickval[pos] for pos in positions]
@@ -166,11 +177,7 @@ def display_click_data(clickData):
         "data": traces,
         "layout": {
             "title": f"Model {model} price over time",
-            "xaxis": {
-                "title": "Date",
-                "ticktext": ticktext,
-                "tickvals": tickval,
-            },
+            "xaxis": {"title": "Date", "ticktext": ticktext, "tickvals": tickval,},
             "yaxis": {"title": "Sale Price USD"},
         },
     }
@@ -180,6 +187,6 @@ if __name__ == "__main__":
     aws = False
 
     if aws:
-        app.run_server(debug=False, host='0.0.0.0', port=80)
+        app.run_server(debug=False, host="0.0.0.0", port=80)
     else:
         app.run_server(debug=True)

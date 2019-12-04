@@ -1,7 +1,7 @@
 # Module creating and handling local MongosDB
 from pymongo import MongoClient
 import pymongo
-from .secrets import mongos_secrets
+from secrets import mongos_secrets
 
 client = MongoClient(mongos_secrets["host"], mongos_secrets["port"])
 db = client["Hardwarescrape"]
