@@ -1,10 +1,11 @@
 import praw
 import pandas as pd
 from psaw import PushshiftAPI
-from .secrets import reddit_app_key, reddit_secret_key
-from .GPUNameScrape import pd_series_to_set
-from .pymongo_db import db, insert_reddit_submission_dict
-import os
+from secrets import reddit_app_key, reddit_secret_key
+from GPUNameScrape import pd_series_to_set
+from pymongo_db import db, insert_reddit_submission_dict
+import pymongo
+import pathlib
 
 reddit = praw.Reddit(
     client_id=reddit_app_key,
@@ -14,8 +15,10 @@ reddit = praw.Reddit(
 
 psaw_api = PushshiftAPI(reddit)
 
-if os.path.exists("data/nvidia_clean_names.csv"):
-    nvidia_names = pd.read_csv("data/nvidia_clean_names.csv", index_col=0).rename(
+clean_name_path = pathlib.Path.cwd().parent / "data/nvidia_clean_names.csv"
+
+if clean_name_path.exists():
+    nvidia_names = pd.read_csv(clean_name_path, index_col=0).rename(
         {"0": "name"}, axis=1
     )
 
@@ -35,10 +38,19 @@ def scrape_hws_psaw_style(
     :param limit: number of submissions to fetch
     :return: None, prints number of posts processed
     """
-    generator = psaw_api.search_submissions(
-        subreddit="hardwareswap", before=1568147665, after=1546300800, limit=limit
-    )  # scraping between 9/10/19 13:36 and 1/1/19 00:00
+
     collection = db[collection_name]
+
+    latest_document = collection.find_one(sort=[("created", pymongo.DESCENDING)])
+    datetime = "365d"
+    if latest_document:
+        created = latest_document.get("created")
+        if created:
+            datetime = int(created)
+
+    generator = psaw_api.search_submissions(
+        subreddit="hardwareswap", after=datetime, limit=limit
+    )  # scraping between 9/10/19 13:36 and 1/1/19 00:00
 
     posts_processed = 0
     posts_inserted = 0
