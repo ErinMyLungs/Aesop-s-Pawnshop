@@ -137,7 +137,7 @@ def display_click_data(clickData):
 
     ticktext = list(non_ti_model_data.date_label.values)
     tickval = list(non_ti_model_data.created.values)
-
+    non_ti_model_data = non_ti_model_data.sort_values("created")
     traces.append(
         dict(
             x=non_ti_model_data.created,
@@ -150,6 +150,7 @@ def display_click_data(clickData):
     )
     if ti:
         ti_model_data = raw.loc[raw.is_ti == True].loc[raw.model == model]
+        ti_model_data = ti_model_data.sort_values("created")
 
         ticktext.extend(list(ti_model_data.date_label.values))
         tickval.extend(list(ti_model_data.created.values))
@@ -184,7 +185,7 @@ def display_click_data(clickData):
 
 
 if __name__ == "__main__":
-    aws = False
+    aws = True
 
     if aws:
         app.run_server(debug=False, host="0.0.0.0", port=80)

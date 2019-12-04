@@ -1,6 +1,6 @@
 # module for searching and pulling out pricing data from mongo documents
 import pymongo
-from .pymongo_db import db, bulk_insert_fontend_data
+from pymongo_db import db, bulk_insert_fontend_data
 import re
 import pickle
 from typing import Union

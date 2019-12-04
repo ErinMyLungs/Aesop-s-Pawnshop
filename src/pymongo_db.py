@@ -31,10 +31,12 @@ def bulk_insert_fontend_data(
     :param collection:
     :return:
     """
-    if not submission:
-        raise ValueError("Submission object is None!")
 
-    collection.insert_many(submission)
+    for sub in submission:
+        if collection.find_one({"post_id": sub["post_id"]}):
+            continue
+        else:
+            collection.insert_one(sub)
 
 
 def init_db(
