@@ -3,9 +3,9 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from pymongo_db import db
 import pandas as pd
 import numpy as np
+from pymongo_db import db
 
 # TODO: Refactor this to hell and back because it's currently pretty terrible
 
@@ -120,7 +120,7 @@ def display_click_data(clickData):
     :return: updated lineplot
     """
     if not clickData:
-        return {"data": [dict(x=0, y=0, ids=0, type="plot", mode="lines+markers",)]}
+        return {"data": [dict(x=0, y=0, ids=0, type="plot", mode="lines+markers")]}
 
     ti = False
     if len(clickData.get("points")) == 2:
@@ -178,14 +178,14 @@ def display_click_data(clickData):
         "data": traces,
         "layout": {
             "title": f"Model {model} price over time",
-            "xaxis": {"title": "Date", "ticktext": ticktext, "tickvals": tickval,},
+            "xaxis": {"title": "Date", "ticktext": ticktext, "tickvals": tickval},
             "yaxis": {"title": "Sale Price USD"},
         },
     }
 
 
 if __name__ == "__main__":
-    aws = True
+    aws = False
 
     if aws:
         app.run_server(debug=False, host="0.0.0.0", port=80)

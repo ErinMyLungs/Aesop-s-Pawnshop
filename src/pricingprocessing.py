@@ -1,13 +1,15 @@
 # module for searching and pulling out pricing data from mongo documents
-import pymongo
-from pymongo_db import db, bulk_insert_fontend_data
-import re
-import pickle
-from typing import Union
-import pandas as pd
-import numpy as np
-import os
 import inspect
+import pickle
+import os
+import re
+from typing import Union
+
+import numpy as np
+import pandas as pd
+import pymongo
+
+from src.pymongo_db import db, bulk_insert_fontend_data
 
 
 def pull_pricing_draft(
@@ -311,9 +313,7 @@ def create_curated_frontend_dataframe(dataframe):
     return curated_dataframe
 
 
-def frontend_datapipeline(
-    collection_to_pull: str, collection_to_insert: str,
-):
+def frontend_datapipeline(collection_to_pull: str, collection_to_insert: str):
     """
     Full processing pipeline to go from raw data to frontend data in the frontend collection
     :param collection_to_pull: name of collection to pull raw data from

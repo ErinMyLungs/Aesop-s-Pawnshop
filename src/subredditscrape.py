@@ -1,11 +1,14 @@
-import praw
-import pandas as pd
-from psaw import PushshiftAPI
-from secrets import reddit_app_key, reddit_secret_key
-from GPUNameScrape import pd_series_to_set
-from pymongo_db import db, insert_reddit_submission_dict
-import pymongo
 import pathlib
+
+import pandas as pd
+import praw
+from psaw import PushshiftAPI
+import pymongo
+
+from src.secrets import reddit_app_key, reddit_secret_key
+from src.GPUNameScrape import pd_series_to_set
+from src.pymongo_db import db, insert_reddit_submission_dict
+
 
 reddit = praw.Reddit(
     client_id=reddit_app_key,
@@ -17,12 +20,14 @@ psaw_api = PushshiftAPI(reddit)
 
 clean_name_path = pathlib.Path.cwd().parent / "data/nvidia_clean_names.csv"
 
+nvidia_names = None
+
 if clean_name_path.exists():
     nvidia_names = pd.read_csv(clean_name_path, index_col=0).rename(
         {"0": "name"}, axis=1
     )
-
-gpu_name_set = pd_series_to_set(nvidia_names["name"])
+if nvidia_names:
+    gpu_name_set = pd_series_to_set(nvidia_names["name"])
 
 
 def scrape_hws_psaw_style(

@@ -1,7 +1,8 @@
 # Module to scrape wikipedia tables for GPU names and helper functions
 import requests
-import pandas as pd
+
 from bs4 import BeautifulSoup
+import pandas as pd
 
 
 def scrape_gpu_names_wikipedia(url: str, csv_filepath: str, return_dataframe=False):

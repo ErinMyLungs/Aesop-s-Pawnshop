@@ -11,7 +11,8 @@ reddit_app_key = f"{''.join(random.choices(string.ascii_letters+ string.digits, 
 # and get the app and secret key from there and replace the f strings with your personal key.
 
 mongos_secrets = {
-    "host": "localhost:27017"
+    "host": "localhost",
+    "port": 27017,
 }  # If your mongoserver is local, default values are fine.
 
 if __name__ == "__main__":
