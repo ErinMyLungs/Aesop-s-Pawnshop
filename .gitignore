@@ -1,7 +1,10 @@
-backend/src/secrets.py
 .idea*
 __pycache__*
 /env.py
+venv
 *.pytest_cache
 *.ipynb_checkpoints
 backend/data/df.P
+backend/src/secrets.py
+
+client/node_modules
