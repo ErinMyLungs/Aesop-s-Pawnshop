@@ -5,5 +5,3 @@ __pycache__*
 *.pytest_cache
 *.ipynb_checkpoints
 data/df.P
-
-node_modules/
