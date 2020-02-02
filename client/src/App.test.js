@@ -15,8 +15,8 @@ describe('App basic test', () => {
         expect(wrapper.find('h1').text()).toEqual('Used GPU Market on /r/hardwareswap');
     });
 
-    it('should render a VictoryBar component', () => {
-        expect(wrapper.find('VictoryBar').length).toEqual(1);
+    it('should render a BaseGroupedChart component', () => {
+        expect(wrapper.find('BaseGroupedChart').length).toEqual(1);
     });
 
 });
