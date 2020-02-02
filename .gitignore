@@ -7,4 +7,4 @@ venv
 backend/data/df.P
 backend/src/secrets.py
 
-client/node_modules
+frontend/node_modules
