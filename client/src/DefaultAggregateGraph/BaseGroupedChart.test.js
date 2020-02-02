@@ -14,10 +14,10 @@ describe('Always visible graph module with aggregate GPU data', () => {
         expect(wrapper.find('VictoryChart').length).toEqual(1);
     });
 
-    it('should contain VictoryGroup and VictoryBar elements', () => {
+    it('should contain VictoryGroup and two VictoryBar elements', () => {
         let victoryChartShallow = wrapper.find('VictoryChart').shallow();
 
         expect(victoryChartShallow.find('VictoryGroup').length).toEqual(1);
-        expect(victoryChartShallow.find('VictoryBar').length).toEqual(1);
+        expect(victoryChartShallow.find('VictoryBar').length).toEqual(2);
     });
 });
