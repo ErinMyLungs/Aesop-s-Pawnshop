@@ -8,3 +8,4 @@ backend/data/df.P
 backend/src/secrets.py
 
 frontend/node_modules
+frontend/build
