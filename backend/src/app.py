@@ -42,7 +42,8 @@ def get_all_price_data():
         how='outer'
     ).rename(columns={'price': 'tiPrice'})
 
-    frontend_dispaly_data = frontend_dispaly_data.fillna(0.0) #fills all missing models with a price of 0.0
+    #fills all missing models with a price of 0.0
+    frontend_dispaly_data = frontend_dispaly_data.fillna(0.0)
 
     frontend_dispaly_data.loc[:, 'model'] = frontend_dispaly_data.model.map(lambda x: 'GTX ' + str(x) if x < 2000 else 'RTX ' + str(x))
 
