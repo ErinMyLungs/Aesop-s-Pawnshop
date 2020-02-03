@@ -2,6 +2,7 @@
 import inspect
 import pickle
 import os
+from pathlib import Path
 import re
 from typing import Union
 
@@ -321,8 +322,8 @@ def frontend_datapipeline(collection_to_pull: str, collection_to_insert: str):
     :return: None
     """
     comparison_set, bad_set = load_comparison_pickle(
-        "/home/erin/PycharmProjects/Aesops-Pawnshop/data/comp_set_pickle.P",
-        "/home/erin/PycharmProjects/Aesops-Pawnshop/data/bad_set.P",
+        (Path('.').resolve().parent/'data'/'comp_set_pickle.P'),
+        (Path('.').resolve().parent/'data'/'bad_set.P')
     )
     dataframe = pull_pricing_draft(
         comparison_set, bad_set, collection_name=collection_to_pull, limit=None
