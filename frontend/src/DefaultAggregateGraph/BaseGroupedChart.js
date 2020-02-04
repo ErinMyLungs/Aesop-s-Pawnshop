@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
-import {VictoryChart, VictoryGroup, VictoryBar, VictoryAxis, VictoryLabel, VictoryLegend} from 'victory';
+import {VictoryChart, VictoryGroup, VictoryBar, VictoryAxis, VictoryLabel, VictoryLegend, VictoryTheme} from 'victory';
+import PoTGraph from "../IndividualPriceOverTimeGraph/PoTGraph";
 import './BaseGroupedChart.css';
 
 class BaseGroupedChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //Placeholder data TODO: Hook into flask api
-
             data: [
                 {model: ' ', nonTiPrice: 0, tiPrice: 0},
-
             ],
-
-
+            single_model: false
         }
     }
 
@@ -36,9 +33,9 @@ class BaseGroupedChart extends Component {
             if (this.state.data.length === 1) {
                 this.fetchAggregateData()
             }
-        }
-        else if (this.state.data.length ===1 && development === true){
-            this.setState({data:[{model: '760', nonTiPrice: 69, tiPrice: 0},
+        } else if (this.state.data.length === 1 && development === true) {
+            this.setState({
+                data: [{model: '760', nonTiPrice: 69, tiPrice: 0},
                     {model: '780', nonTiPrice: 107, tiPrice: 110},
                     {model: '950', nonTiPrice: 56, tiPrice: 0},
                     {model: '960', nonTiPrice: 81, tiPrice: 0},
@@ -53,64 +50,87 @@ class BaseGroupedChart extends Component {
                     {model: '1660', nonTiPrice: 168, tiPrice: 221},
                     {model: '2060', nonTiPrice: 315, tiPrice: 0},
                     {model: '2070', nonTiPrice: 430, tiPrice: 0},
-                    {model: '2080', nonTiPrice: 610, tiPrice: 562},]})
+                    {model: '2080', nonTiPrice: 610, tiPrice: 562},]
+            })
         }
 
         return (
-            <div
-                className={'base-grouped-chart'}
-                style={{display: 'flex'}}
-            >
-
-                <h3>Average GPU Price in Dollars</h3>
-
-                <VictoryChart
-                    title={"Average GPU Price in Dollars"}
-                    domainPadding={{x: 10}}
+            <div>
+                <div
+                    className={'base-grouped-chart'}
+                    style={{display: 'flex'}}
                 >
-                    {/*TODO: Add legend*/}
-                    <VictoryAxis
-                        dependentAxis={true}
-                        label={"Average Price ($USD"}
-                        tickFormat={(Price) => `$${Price}`}
-                        style={{
-                            axisLabel: {fontSize: 10, padding: 30},
-                            tickLabels: {fontSize: 7, padding: 5}
-                        }}
-                    />
 
-                    <VictoryAxis
-                        dependentAxis={false}
-                        label={"GPU Models (Arranged by Generation)"}
-                        tickLabelComponent={<VictoryLabel dy={-3}/>}
-                        style={{
-                            axisLabel: {fontSize: 10, padding: 30, angle: 0},
-                            tickLabels: {fontSize: 7, padding: 20, angle: -45}
-                        }}
-                    />
+                    <h3>Average GPU Price in Dollars</h3>
 
-                    <VictoryGroup
-                        offset={5}
-                        colorScale={'qualitative'}
-                        style={{data: {width: 5}}}
+                    <VictoryChart
+                        title={"Average GPU Price in Dollars"}
+                        domainPadding={{x: 10}}
                     >
 
-                        <VictoryBar
-                            data={this.state.data}
-                            x={"model"}
-                            y={"tiPrice"}
+                        {/*TODO: Add legend*/}
+                        <VictoryAxis
+                            dependentAxis={true}
+                            label={"Average Price ($ USD)"}
+                            tickFormat={(Price) => `$${Price}`}
+                            style={{
+                                axisLabel: {fontSize: 10, padding: 30},
+                                tickLabels: {fontSize: 7, padding: 5}
+                            }}
                         />
 
-                        <VictoryBar
-                            data={this.state.data}
-                            x={'model'}
-                            y={"nonTiPrice"}
+                        <VictoryAxis
+                            dependentAxis={false}
+                            label={"GPU Models (Arranged by Generation)"}
+                            tickLabelComponent={<VictoryLabel dy={-3}/>}
+                            style={{
+                                axisLabel: {fontSize: 10, padding: 30, angle: 0},
+                                tickLabels: {fontSize: 7, padding: 20, angle: -45}
+                            }}
                         />
 
-                    </VictoryGroup>
-                </VictoryChart>
+                        <VictoryGroup
+                            name={'testing'}
+                            offset={5}
+                            // colorScale={'qualitative'}
+                            style={{data: {width: 5}}}
+                            events={[{
+                                childName: ['bar-1', 'bar-2'],
+                                target: "data",
+                                eventHandlers: {
+                                    onClick: (event, data) => {
+                                        this.setState({single_model: data.datum.model});
+                                    }
+                                }
+                            }]}
+                        >
+
+                            <VictoryBar
+                                name={'bar-1'}
+                                data={this.state.data}
+                                x={"model"}
+                                y={"tiPrice"}
+                            />
+
+                            <VictoryBar
+                                name={'bar-2'}
+                                data={this.state.data}
+                                x={'model'}
+                                y={"nonTiPrice"}
+                            />
+
+                        </VictoryGroup>
+                    </VictoryChart>
+                </div>
+
+                <div className={'price-over-time-chart'}>
+                    {
+                        this.state.single_model !== false &&
+                        <PoTGraph model={this.state.single_model}/>
+                    }
+                </div>
+
             </div>
-
         );
     }
 }
