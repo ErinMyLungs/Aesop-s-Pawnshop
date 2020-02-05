@@ -160,6 +160,7 @@ class PoTGraph extends Component {
                             }
 
                         </VictoryGroup>
+
                         <VictoryLegend
                             x={300}
                             y={15}
@@ -172,6 +173,7 @@ class PoTGraph extends Component {
                             labelComponent={<VictoryLabel dx={-20} style={{fontSize: 8}}/>}
                             data={legendData}
                         />
+
                     </VictoryChart>
                 </div>
             );

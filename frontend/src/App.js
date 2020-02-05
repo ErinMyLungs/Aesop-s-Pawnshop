@@ -3,7 +3,7 @@ import './App.css';
 import BaseGroupedChart from "./DefaultAggregateGraph/BaseGroupedChart";
 
 function App() {
-    const development = true;
+    const development = false;
     return (
         <div className="App">
             <h1>Used GPU Market on /r/hardwareswap</h1>

@@ -51,7 +51,6 @@ def get_all_price_data():
         response=frontend_dispaly_data.to_json(orient='records'),
         status=200,
         mimetype='application/json')
-    response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
 
@@ -73,7 +72,6 @@ def get_model_timeseries_data(model):
         status=200,
         mimetype='application/json'
     )
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 if __name__ == '__main__':

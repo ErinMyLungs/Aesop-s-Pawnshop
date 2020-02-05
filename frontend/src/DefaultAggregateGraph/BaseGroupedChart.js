@@ -38,8 +38,6 @@ class BaseGroupedChart extends Component {
         )
     }
 
-
-
     render() {
         if (this.state.data.length === 1) {
             this.fetchAggregateData(this.props.development)
@@ -54,6 +52,8 @@ class BaseGroupedChart extends Component {
 
                     <h2>Average GPU Price in Dollars</h2>
 
+                    {this.state.single_model === false && <h4>Click on a bar to see sale price over time</h4>}
+
                     <VictoryChart
                         title={"Average GPU Price in Dollars"}
                         domainPadding={{x: 10}}
@@ -63,7 +63,6 @@ class BaseGroupedChart extends Component {
                                 style={{width: "80%"}}
                             />}
                     >
-
 
                         <VictoryAxis
                             dependentAxis={true}
@@ -94,7 +93,7 @@ class BaseGroupedChart extends Component {
                             offset={5}
                             style={{data: {width: 5}}}
                             events={[{
-                                childName: ['bar-1', 'bar-2'],
+                                childName: ['non-ti-bar', 'ti-bar'],
                                 target: "data",
                                 eventHandlers: {
                                     onClick: (event, data) => {
@@ -104,14 +103,14 @@ class BaseGroupedChart extends Component {
                             }]}>
 
                             <VictoryBar
-                                name={'bar-1'}
+                                name={'non-ti-bar'}
                                 data={this.state.data}
                                 x={"model"}
                                 y={"nonTiPrice"}
                             />
 
                             <VictoryBar
-                                name={'bar-2'}
+                                name={'ti-bar'}
                                 data={this.state.data}
                                 x={'model'}
                                 y={"tiPrice"}
