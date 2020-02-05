@@ -22,9 +22,12 @@ class BaseGroupedChart extends Component {
         }
     }
 
-    fetchAggregateData() {
-        // fetch('./api/v0.1/model')
-        fetch('http://127.0.0.1:5000/api/v0.1/model')
+    fetchAggregateData(development) {
+        // if development === true, route api fetch to local flask server
+        const apiString = (development ?
+            `http://127.0.0.1:5000/api/v0.1/model` :
+            `./api/v0.1/model`);
+        fetch(apiString)
             .then(results => {
                     return results.json();
                 }
@@ -39,7 +42,7 @@ class BaseGroupedChart extends Component {
 
     render() {
         if (this.state.data.length === 1) {
-            this.fetchAggregateData()
+            this.fetchAggregateData(this.props.development)
         }
 
         return (
@@ -138,7 +141,7 @@ class BaseGroupedChart extends Component {
                 < div className={'price-over-time-chart'}>
                     {
                         this.state.single_model !== false &&
-                        <PoTGraph model={this.state.single_model}/>
+                        <PoTGraph model={this.state.single_model} development={this.props.development}/>
                     }
 
                 </div>

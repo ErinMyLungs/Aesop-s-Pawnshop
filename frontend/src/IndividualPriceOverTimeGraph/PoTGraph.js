@@ -29,13 +29,18 @@ class PoTGraph extends Component {
             }
     }
 
-    fetchModelData(modelNumber) {
+    fetchModelData(modelNumber, development) {
         if (this.state.modelNumber === modelNumber) {
         } else {
-            // const apiString = `./api/v0.1/model/${modelNumber}`;
-            const apiString = `http://127.0.0.1:5000/api/v0.1/model/${modelNumber}`;
+
+            // If development is true, route API calls to local flask server run on app.py
+            const apiString = (development ?
+                `http://127.0.0.1:5000/api/v0.1/model/${modelNumber}` :
+                `./api/v0.1/model/${modelNumber}`);
+
             fetch(apiString)
                 .then(results => {
+                        // console.log(results.json());
                         return results.json();
                     }
                 ).then(
@@ -62,7 +67,7 @@ class PoTGraph extends Component {
     render() {
         if (this.props.model === false) {
         } else {
-            this.fetchModelData(this.props.model);
+            this.fetchModelData(this.props.model, this.props.development);
 
             const axisStyle = {
                 axisLabel: {fontSize: 10, padding: 30},
@@ -72,7 +77,7 @@ class PoTGraph extends Component {
             let legendData = [
                 {name: "Non-TI", symbol: {fill: blue, size: 2}},
             ];
-            if (this.state.tiData[0].post_id !=='placeholder') {
+            if (this.state.tiData[0].post_id !== 'placeholder') {
                 legendData.push({name: "TI", symbol: {fill: orange, size: 2}})
             }
 

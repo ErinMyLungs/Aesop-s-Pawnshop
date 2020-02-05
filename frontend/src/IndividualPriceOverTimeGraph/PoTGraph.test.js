@@ -6,7 +6,7 @@ describe('Price over Time Module tests', () => {
 
     let wrapper;
     beforeEach(() => {
-        wrapper = shallow(<PoTGraph modelNumber={false}/>);
+        wrapper = shallow(<PoTGraph modelNumber={false} development={true}/>);
     });
 
     it('should render a single div tag', () => {
@@ -49,7 +49,7 @@ describe('Price over Time Module tests', () => {
 
         expect(wrapper.find('h2').text()).toEqual('Price of foobar over time');
         expect(mockFetchAPI.mock.calls.length).toEqual(1);
-        expect(mockFetchAPI.mock.calls[0]).toEqual(['foobar']);
+        expect(mockFetchAPI.mock.calls[0]).toEqual(['foobar', wrapper.instance().props.development]);
     });
 
 });
