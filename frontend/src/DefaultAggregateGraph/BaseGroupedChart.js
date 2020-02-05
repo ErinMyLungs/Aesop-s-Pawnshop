@@ -1,21 +1,32 @@
 import React, {Component} from 'react';
-import {VictoryChart, VictoryGroup, VictoryBar, VictoryAxis, VictoryLabel, VictoryLegend, VictoryTheme} from 'victory';
+import {
+    VictoryChart,
+    VictoryGroup,
+    VictoryBar,
+    VictoryAxis,
+    VictoryLabel,
+    VictoryLegend,
+    VictoryTheme,
+    VictoryContainer
+} from 'victory';
 import PoTGraph from "../IndividualPriceOverTimeGraph/PoTGraph";
 import './BaseGroupedChart.css';
+import ErinGraphTheme from "../ErinTheme/ErinGraphTheme";
 
 class BaseGroupedChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [
-                {model: ' ', nonTiPrice: 0, tiPrice: 0},
+                {model: 'placeholder', nonTiPrice: 0, tiPrice: 0},
             ],
             single_model: false
         }
     }
 
     fetchAggregateData() {
-        fetch('./api/v0.1/model')
+        // fetch('./api/v0.1/model')
+        fetch('http://127.0.0.1:5000/api/v0.1/model')
             .then(results => {
                     return results.json();
                 }
@@ -27,31 +38,8 @@ class BaseGroupedChart extends Component {
     }
 
     render() {
-        const development = true;
-
-        if (development === false) {
-            if (this.state.data.length === 1) {
-                this.fetchAggregateData()
-            }
-        } else if (this.state.data.length === 1 && development === true) {
-            this.setState({
-                data: [{model: '760', nonTiPrice: 69, tiPrice: 0},
-                    {model: '780', nonTiPrice: 107, tiPrice: 110},
-                    {model: '950', nonTiPrice: 56, tiPrice: 0},
-                    {model: '960', nonTiPrice: 81, tiPrice: 0},
-                    {model: '970', nonTiPrice: 102, tiPrice: 0},
-                    {model: '980', nonTiPrice: 201, tiPrice: 235},
-                    {model: '1030', nonTiPrice: 64, tiPrice: 0},
-                    {model: '1050', nonTiPrice: 103, tiPrice: 104},
-                    {model: '1060', nonTiPrice: 154, tiPrice: 0},
-                    {model: '1070', nonTiPrice: 240, tiPrice: 285},
-                    {model: '1080', nonTiPrice: 347, tiPrice: 494},
-                    {model: '1650', nonTiPrice: 132, tiPrice: 0},
-                    {model: '1660', nonTiPrice: 168, tiPrice: 221},
-                    {model: '2060', nonTiPrice: 315, tiPrice: 0},
-                    {model: '2070', nonTiPrice: 430, tiPrice: 0},
-                    {model: '2080', nonTiPrice: 610, tiPrice: 562},]
-            })
+        if (this.state.data.length === 1) {
+            this.fetchAggregateData()
         }
 
         return (
@@ -66,9 +54,13 @@ class BaseGroupedChart extends Component {
                     <VictoryChart
                         title={"Average GPU Price in Dollars"}
                         domainPadding={{x: 10}}
+                        theme={ErinGraphTheme}
+                        containerComponent={
+                            <VictoryContainer
+                                style={{width: "80%"}}
+                            />}
                     >
 
-                        {/*TODO: Add legend*/}
                         <VictoryAxis
                             dependentAxis={true}
                             label={"Average Price ($ USD)"}
@@ -92,7 +84,6 @@ class BaseGroupedChart extends Component {
                         <VictoryGroup
                             name={'testing'}
                             offset={5}
-                            // colorScale={'qualitative'}
                             style={{data: {width: 5}}}
                             events={[{
                                 childName: ['bar-1', 'bar-2'],
@@ -123,7 +114,8 @@ class BaseGroupedChart extends Component {
                     </VictoryChart>
                 </div>
 
-                <div className={'price-over-time-chart'}>
+                < div
+                    className={'price-over-time-chart'}>
                     {
                         this.state.single_model !== false &&
                         <PoTGraph model={this.state.single_model}/>

@@ -45,15 +45,34 @@ def get_all_price_data():
     #fills all missing models with a price of 0.0
     frontend_dispaly_data = frontend_dispaly_data.fillna(0.0)
 
-    frontend_dispaly_data.loc[:, 'model'] = frontend_dispaly_data.model.map(lambda x: 'GTX ' + str(x) if x < 2000 else 'RTX ' + str(x))
-
+    # frontend_dispaly_data.loc[:, 'model'] = frontend_dispaly_data.model.map(lambda x: 'GTX ' + str(x) if x < 2000 else 'RTX ' + str(x))
+    frontend_dispaly_data.loc[:, 'model'] = frontend_dispaly_data.model.astype('str')
     response = app.response_class(
         response=frontend_dispaly_data.to_json(orient='records'),
         status=200,
         mimetype='application/json')
+    response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
 
+
+@app.route('/api/v0.1/model/<string:model>', methods=['GET'])
+def get_model_timeseries_data(model):
+    base_df = pd.DataFrame.from_records(collection.find())
+    base_df.loc[:, 'datestring'] = pd.to_datetime(base_df.created, unit='s').dt.strftime('%m-%d-%y')
+
+    non_ti_json = base_df[['post_id', 'datestring', 'created', 'price']].loc[(base_df.model==int(model)) & (base_df.is_ti==False)].to_json(orient='records')
+    ti_json = base_df[['post_id', 'datestring', 'created', 'price']].loc[(base_df.model==int(model)) & (base_df.is_ti==True)].to_json(orient='records')
+
+    json_response = ('['+non_ti_json + ', ' + ti_json + ']')
+
+    response = app.response_class(
+        response=json_response,
+        status=200,
+        mimetype='application/json'
+    )
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
