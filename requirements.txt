@@ -4,7 +4,6 @@ psaw
 beautifulsoup4 # technically for wikipedia scraping
 
 #front end packages
-dash #TODO remove once react frontend complete
 flask
 pymongo #also used to store data
 

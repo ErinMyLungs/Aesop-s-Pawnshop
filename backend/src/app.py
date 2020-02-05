@@ -2,7 +2,7 @@
 from flask import Flask, render_template, jsonify
 import pandas as pd
 import numpy as np
-from pymongo_db import db
+from .pymongo_db import db
 
 
 collection = db["frontend"]
@@ -65,6 +65,8 @@ def get_model_timeseries_data(model):
     ti_json = base_df[['post_id', 'datestring', 'created', 'price']].loc[(base_df.model==int(model)) & (base_df.is_ti==True)].to_json(orient='records')
 
     json_response = ('['+non_ti_json + ', ' + ti_json + ']')
+
+    # TODO: refactor so json_response returns an object (instead of array ) that can be more easily handled on front-end
 
     response = app.response_class(
         response=json_response,

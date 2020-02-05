@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import {assign} from "lodash";
 
 // *
 // * Colors
@@ -13,7 +13,7 @@ const blue = "#4363d8";
 const grey = "#a9a9a9";
 const white = "#ffffff";
 const black = "#000000";
-const colors = [yellow,blue, orange, maroon, lavender, pink, navy];
+const colors = [blue, orange, maroon, navy, yellow, pink, lavender];
 // *
 // * Typography
 // *
@@ -27,7 +27,7 @@ const padding = 8;
 const baseProps = {
     width: 450,
     height: 300,
-    padding: {top:10, bottom:50, left:50, right:50}
+    padding: {top: 10, bottom: 50, left: 50, right: 50}
 };
 // *
 // * Labels
@@ -37,9 +37,9 @@ const baseLabelStyles = {
     fontSize,
     letterSpacing,
     padding,
-    fill: white,
+    fill: black,
     stroke: "transparent",
-    strokeWidth: 0
+    strokeWidth: 1
 };
 
 // *
@@ -48,6 +48,8 @@ const baseLabelStyles = {
 const strokeDasharray = "10, 5";
 const strokeLinecap = "round";
 const strokeLinejoin = "round";
+
+export {colors, blue, orange, maroon, navy, yellow, pink, lavender};
 
 export default {
     area: assign(
@@ -107,15 +109,15 @@ export default {
     boxplot: assign(
         {
             style: {
-                max: { padding, stroke: white, strokeWidth: 1 },
+                max: {padding, stroke: white, strokeWidth: 1},
                 maxLabels: baseLabelStyles,
-                median: { padding, stroke: white, strokeWidth: 1 },
+                median: {padding, stroke: white, strokeWidth: 1},
                 medianLabels: baseLabelStyles,
-                min: { padding, stroke: white, strokeWidth: 1 },
+                min: {padding, stroke: white, strokeWidth: 1},
                 minLabels: baseLabelStyles,
-                q1: { padding, fill: white },
+                q1: {padding, fill: white},
                 q1Labels: baseLabelStyles,
-                q3: { padding, fill: white },
+                q3: {padding, fill: white},
                 q3Labels: baseLabelStyles
             },
             boxWidth: 20
@@ -159,26 +161,13 @@ export default {
         },
         baseProps
     ),
-    legend: {
-        colorScale: colors,
-        gutter: 10,
-        orientation: "vertical",
-        titleOrientation: "top",
-        style: {
-            data: {
-                type: "circle"
-            },
-            labels: baseLabelStyles,
-            title: assign({}, baseLabelStyles, { padding: 5 })
-        }
-    },
     line: assign(
         {
             style: {
                 data: {
                     fill: "transparent",
                     opacity: 1,
-                    stroke: white,
+                    stroke: black,
                     strokeWidth: 1
                 },
                 labels: baseLabelStyles
@@ -195,7 +184,7 @@ export default {
                     stroke: blue,
                     strokeWidth: 1
                 },
-                labels: assign({}, baseLabelStyles, { padding: 20 })
+                labels: assign({}, baseLabelStyles, {padding: 20})
             }
         },
         baseProps
@@ -208,7 +197,7 @@ export default {
                     opacity: 1,
                     stroke: "transparent",
                     strokeWidth: 0,
-                    size:1
+                    size: 1
                 },
                 labels: baseLabelStyles
             }
@@ -222,7 +211,7 @@ export default {
         baseProps
     ),
     tooltip: {
-        style: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
+        style: assign({}, baseLabelStyles, {padding: 5, pointerEvents: "none"}),
         flyoutStyle: {
             stroke: black,
             strokeWidth: 1,
@@ -240,7 +229,7 @@ export default {
                     stroke: "transparent",
                     strokeWidth: 0
                 },
-                labels: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
+                labels: assign({}, baseLabelStyles, {padding: 5, pointerEvents: "none"}),
                 flyout: {
                     stroke: black,
                     strokeWidth: 1,

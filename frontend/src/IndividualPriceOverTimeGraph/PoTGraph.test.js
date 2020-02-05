@@ -23,6 +23,7 @@ describe('Price over Time Module tests', () => {
         expect(victoryChartShallow.find('VictoryGroup').length).toEqual(1);
         expect(victoryChartShallow.find('VictoryLine').length).toEqual(1);
         expect(victoryChartShallow.find('VictoryScatter').length).toEqual(1);
+        expect(victoryChartShallow.find('VictoryLegend').length).toEqual(1);
     });
 
     it('should render a second pair of line/scatter charts when tiData is not just placeholder data', () => {
@@ -36,6 +37,8 @@ describe('Price over Time Module tests', () => {
         expect(victoryChartShallow.find('VictoryGroup').length).toEqual(1);
         expect(victoryChartShallow.find('VictoryLine').length).toEqual(2);
         expect(victoryChartShallow.find('VictoryScatter').length).toEqual(2);
+        expect(victoryChartShallow.find('VictoryLegend').length).toEqual(1);
+
     });
 
     it('should update title with model props submitted to it and call API with same prop', () => {
@@ -44,7 +47,7 @@ describe('Price over Time Module tests', () => {
 
         wrapper.setProps({model: 'foobar'});
 
-        expect(wrapper.find('h4').text()).toEqual('Price of foobar over time');
+        expect(wrapper.find('h2').text()).toEqual('Price of foobar over time');
         expect(mockFetchAPI.mock.calls.length).toEqual(1);
         expect(mockFetchAPI.mock.calls[0]).toEqual(['foobar']);
     });

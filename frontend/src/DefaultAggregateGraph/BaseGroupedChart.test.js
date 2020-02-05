@@ -17,11 +17,12 @@ describe('Always visible graph module with aggregate GPU data', () => {
     });
 
 
-    it('should contain VictoryGroup and two VictoryBar elements', () => {
+    it('should contain VictoryGroup, two VictoryBars, and one VictoryLegend', () => {
         let victoryChartShallow = wrapper.find('VictoryChart').shallow();
 
         expect(victoryChartShallow.find('VictoryGroup').length).toEqual(1);
         expect(victoryChartShallow.find('VictoryBar').length).toEqual(2);
+        expect(victoryChartShallow.find('VictoryLegend').length).toEqual(1);
     });
 
 
@@ -33,6 +34,5 @@ describe('Always visible graph module with aggregate GPU data', () => {
         mountedBaseGroupedChart.setState({single_model: '1050'});
         expect(mountedBaseGroupedChart.find('PoTGraph').length).toEqual(1);
     });
-
 
 });

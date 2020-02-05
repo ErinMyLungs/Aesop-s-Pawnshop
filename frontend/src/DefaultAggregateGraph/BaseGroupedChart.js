@@ -6,20 +6,18 @@ import {
     VictoryAxis,
     VictoryLabel,
     VictoryLegend,
-    VictoryTheme,
-    VictoryContainer
+    VictoryContainer,
 } from 'victory';
 import PoTGraph from "../IndividualPriceOverTimeGraph/PoTGraph";
 import './BaseGroupedChart.css';
-import ErinGraphTheme from "../ErinTheme/ErinGraphTheme";
+import ErinGraphTheme, {blue, orange} from "../ErinTheme/ErinGraphTheme";
+
 
 class BaseGroupedChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {model: 'placeholder', nonTiPrice: 0, tiPrice: 0},
-            ],
+            data: [{model: 'placeholder', nonTiPrice: 0, tiPrice: 0},],
             single_model: false
         }
     }
@@ -37,6 +35,8 @@ class BaseGroupedChart extends Component {
         )
     }
 
+
+
     render() {
         if (this.state.data.length === 1) {
             this.fetchAggregateData()
@@ -49,7 +49,7 @@ class BaseGroupedChart extends Component {
                     style={{display: 'flex'}}
                 >
 
-                    <h3>Average GPU Price in Dollars</h3>
+                    <h2>Average GPU Price in Dollars</h2>
 
                     <VictoryChart
                         title={"Average GPU Price in Dollars"}
@@ -60,6 +60,7 @@ class BaseGroupedChart extends Component {
                                 style={{width: "80%"}}
                             />}
                     >
+
 
                         <VictoryAxis
                             dependentAxis={true}
@@ -74,15 +75,19 @@ class BaseGroupedChart extends Component {
                         <VictoryAxis
                             dependentAxis={false}
                             label={"GPU Models (Arranged by Generation)"}
-                            tickLabelComponent={<VictoryLabel dy={-3}/>}
+                            tickFormat={(t) => `${t > 2000 ? 'RTX ' : 'GTX '} ${t}`}
+                            tickLabelComponent={
+                                <VictoryLabel
+                                    dy={-3}
+                                />}
                             style={{
                                 axisLabel: {fontSize: 10, padding: 30, angle: 0},
-                                tickLabels: {fontSize: 7, padding: 20, angle: -45}
+                                tickLabels: {fontSize: 7, padding: 10, angle: -45}
                             }}
                         />
 
                         <VictoryGroup
-                            name={'testing'}
+                            name={'aggregate-average-price-graph'}
                             offset={5}
                             style={{data: {width: 5}}}
                             events={[{
@@ -93,35 +98,50 @@ class BaseGroupedChart extends Component {
                                         this.setState({single_model: data.datum.model});
                                     }
                                 }
-                            }]}
-                        >
+                            }]}>
 
                             <VictoryBar
                                 name={'bar-1'}
                                 data={this.state.data}
                                 x={"model"}
-                                y={"tiPrice"}
+                                y={"nonTiPrice"}
                             />
 
                             <VictoryBar
                                 name={'bar-2'}
                                 data={this.state.data}
                                 x={'model'}
-                                y={"nonTiPrice"}
+                                y={"tiPrice"}
                             />
 
                         </VictoryGroup>
+
+                        <VictoryLegend
+                            x={275}
+                            y={15}
+                            title={"Legend"}
+                            symbolSpacer={25}
+                            centerTitle={false}
+                            orientation="vertical"
+                            rowGutter={{bottom: -10}}
+                            titleComponent={<VictoryLabel dx={12} style={{fontSize: 12}}/>}
+                            labelComponent={<VictoryLabel dx={-20} style={{fontSize: 8}}/>}
+                            data={[
+                                {name: "TI", symbol: {fill: orange, size: 2}},
+                                {name: "Non-TI", symbol: {fill: blue, size: 2}}
+                            ]}
+                        />
+
                     </VictoryChart>
                 </div>
 
-                < div
-                    className={'price-over-time-chart'}>
+                < div className={'price-over-time-chart'}>
                     {
                         this.state.single_model !== false &&
                         <PoTGraph model={this.state.single_model}/>
                     }
-                </div>
 
+                </div>
             </div>
         );
     }
